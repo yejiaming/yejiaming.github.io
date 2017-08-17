@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#通过回调来理解Promise我们都知道Promise的出现是为了规避回调地狱的，由此，我们先来深入了解一下回调的缺陷： ##回调  1、缺乏信任 2、不确定性  Example 12345var money = 30;order(money,function getOrder(orderId)&amp;#123;  // order是一个第三方的下订单的回调函数   orderId &amp;amp;&amp;amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/07/25/通过回调来理解Promise/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#通过回调来理解Promise我们都知道Promise的出现是为了规避回调地狱的，由此，我们先来深入了解一下回调的缺陷： ##回调  1、缺乏信任 2、不确定性  Example 12345var money = 30;order(money,function getOrder(orderId)&amp;#123;  // order是一个第三方的下订单的回调函数   orderId &amp;amp;&amp;amp;">
+<meta property="og:updated_time" content="2017-08-02T12:43:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="#通过回调来理解Promise我们都知道Promise的出现是为了规避回调地狱的，由此，我们先来深入了解一下回调的缺陷： ##回调  1、缺乏信任 2、不确定性  Example 12345var money = 30;order(money,function getOrder(orderId)&amp;#123;  // order是一个第三方的下订单的回调函数   orderId &amp;amp;&amp;amp;">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-通过回调来理解Promise" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/25/通过回调来理解Promise/" class="article-date">
+  <time datetime="2017-07-25T06:07:59.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#通过回调来理解Promise<br>我们都知道Promise的出现是为了规避回调地狱的，由此，我们先来深入了解一下回调的缺陷：</p>
+<p>##回调</p>
+<blockquote>
+<p>1、缺乏信任</p>
+<p>2、不确定性</p>
+</blockquote>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> money = <span class="number">30</span>;</div><div class="line">order(money,<span class="function"><span class="keyword">function</span> <span class="title">getOrder</span>(<span class="params">orderId</span>)</span>&#123;  <span class="comment">// order是一个第三方的下订单的回调函数</span></div><div class="line">   orderId &amp;&amp; pay(orderId);  <span class="comment">// 获取订单编号之后调用第三方支付pay方法去付款 </span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// ...同步代码</span></div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>上面的代码只是常规代码中的一部分，其中order是一个第三方下订单的方法，需要携带回调函数过去获取订单编号，这里面就存在一些信任性和不确定性的问题，如：</p>
+<blockquote>
+<p>1、有可能回调函数getOrder始终不会被调用，那我们就永远拿不到订单编号去支付；<br>2、有可能回调了，可是回调了不止一次，导致我们重复去支付了；<br>3、不确定回掉时间，有可能立马回调，那么接下来的同步代码就会在回调之后执行，有可能它内部调用了异步代码再回调，那么接下来的同步代码就会在回调之前执行。<br>4、也有可能下订单的第三方模块自己内部出错了，导致我们没办法捕获异常；</p>
+</blockquote>
+<p>上面只是回调的一部分缺陷，但其实当我们不喜欢一个东西的时候总有这么多理由，当我们喜欢一个东西的时候，没有理由也会找一堆理由的，下面就是Promise的理由。</p>
+<p>##Promise</p>
+<blockquote>
+<p>1、可信任性</p>
+<p>2、确定性</p>
+</blockquote>
+<p>在解决上述的回调函数的问题之前，有必要先来认识一下Promise的一些主要方法：</p>
+<p>####1、Promise的起点new Promise()</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> <span class="title">PromiseBack</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">    resolve();</div><div class="line">    resolve();</div><div class="line">    reject();</div><div class="line">    reject();</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</div><div class="line">&#125;).then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</div><div class="line">&#125;,()=&gt;&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</div><div class="line">&#125;)</div><div class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line"><span class="comment">// 执行结果依次是：1，2，3，4</span></div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>以上代码体现了new Promise的如下特性：</p>
+<blockquote>
+<p>1、一旦决议（调用过一次resolve或者reject）就不再重复调用决议回调或者改变决议回调。</p>
+<p>2、决议代码是同步的，可是决议的成功或失败的回调代码一定是异步的，而且Promise的异步实现比setTimeout的调用时间更早，因为回调决议存在于Event loop的microtask队列中。</p>
+</blockquote>
+<p>###2、多Promise同时执行：Promise.all([ .. ])</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> promise1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">    resolve(<span class="number">1</span>);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">    resolve(<span class="number">2</span>);</div><div class="line">    <span class="comment">// reject(3);</span></div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.all([promise1,promise2]).then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);    <span class="comment">// 打印结果是：[ 1, 2 ]</span></div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);    <span class="comment">// 当promise2注释部分放开，非注释部分注释，打印结果是：3</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>Promise.all方法对于promise数组的决议是：<strong>当其中所有的promise都是成功决议的时候，就会调用成功的决议回调resolveBack，并且把promise数组的决议值以数组的形式按照顺序返回resolve中的值；如果其中哪怕有一个失败的决议都会调用失败的决议回调rejectBack，并且只返回promise宿主中失败的决议值，以数组顺序返回</strong>。</p>
+<p>###3、多Promise竞赛执行：Promise.race([ .. ])<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> promise1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    resolve(<span class="number">1</span>);</div><div class="line">  &#125;,<span class="number">100</span>);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//resolve(2);</span></div><div class="line">    reject(<span class="number">3</span>);</div><div class="line">  &#125;,<span class="number">50</span>);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.race([promise1,promise2]).then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);    <span class="comment">// 打印结果是：2</span></div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);    <span class="comment">// 当promise2注释部分放开，非注释部分注释，打印结果是：3</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>Promise.race方法和all方法不同，它对于promise数组的决议是：<strong>当promise数组中有一个成功了，那就会立即执行成功的决议回调，当有一个失败了，就会立即执行失败的决议回调，所以，它也叫*</strong>竞赛决议<em>，它的一个常用的应用场景就是<strong>异步请求超时处理</strong>，代码如下：<br>**</em>Example:<em>*</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// request(..)是一个支持Promise的Ajax工具</span></div><div class="line"><span class="keyword">let</span> promise1 = request( <span class="string">"http://some.url.1/"</span>);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="function"><span class="keyword">function</span>(<span class="params">second=<span class="number">1000</span></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</div><div class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">      reject(<span class="string">'请求超时'</span>);</div><div class="line">    &#125;,second)</div><div class="line">  &#125;)</div><div class="line">&#125;;</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.race([promise1,promise2(<span class="number">3000</span>)])</div><div class="line">.then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);</div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);    <span class="comment">// 当请求超时3秒钟就决议失败，打印错误信息，如果这里信息是统一处理，那最好超时的值构造成和异步请求返回错误结果的值一致</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>###4、Promise错误处理catch…<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(a);</div><div class="line">&#125;).catch(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(err);     <span class="comment">// 打印结果：33 [ReferenceError: a is not defined]</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>catch和then一样都是Promise的<strong>实例方法</strong>，而且也都调用完成之后也都会<strong>返回一个新的Promise实例</strong>，这样就可以继续then或catch了，这也就是<strong>Promise的“链式流”</strong>。其实catch本身实现和then是类似的，可以完全看成是then仅有失败决议回调，即：<strong>then(null,(err)=&gt;{})。也就是说then的失败决议当Promise决议代码出错了，哪怕没有调用reject方法，也是会被捕获到错误的</strong>。</p>
+<p>###总结<br>浏览过上述方法之后，我们现在来解决一开始我们遇到的那个回调函数的问题，解决问题代码如下：</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> money = <span class="number">30</span>;</div><div class="line"><span class="keyword">let</span> promise1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">    order(money,<span class="function"><span class="keyword">function</span> <span class="title">getOrder</span>(<span class="params">orderId</span>)</span>&#123; </div><div class="line">        orderId ? resolve(orderId) : reject(orderId);</div><div class="line">    &#125;); </div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="function"><span class="keyword">function</span>(<span class="params">second=<span class="number">1000</span></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</div><div class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">      reject(<span class="string">'请求超时'</span>);</div><div class="line">    &#125;,second)</div><div class="line">  &#125;)</div><div class="line">&#125;;</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.race([promise1,promise2(<span class="number">3000</span>)])</div><div class="line">.then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);</div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result);    <span class="comment">// 当请求超时，或者order内部代码错误等都会调用失败的决议</span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// ...同步代码</span></div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>上面这个Promise例子展示了对回调问题的规避，具体解决思路是：</p>
+<blockquote>
+<p>1、通过使用Promise.race竞赛决议方法解决如果第三方的order方法不调用getOrder的情况，可以定位到具体的错误代码和错误原因；<br>2、根据Promise的决议特性：一旦决议不可状态不可更改，不可重复。解决了回调了不止一次的问题；<br>3、根据Promise的决议回调是异步的特性，决议的回调一定是异步的特性，解决了回调时间的不确定性。<br>4、根据rejectBack类似catch的特性，失败的决议回调是可以捕获到决议代码异常的报错的，那这样，如果第三方内部出现了问题，是可以捕获到的。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/25/通过回调来理解Promise/" data-id="cj6gh2ny7000jljdwx1z5ktym" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/09/从ES6生成器(Generator)原理解读，到理解ES7的asyn...await.../" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/21/从ES6的Proxy代理看ES5的代理如何实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/08/17/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/14/解读vue双向绑定的内部实现原理/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/13/ES6迭代器（interator）和for...of...循环/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/09/从ES6生成器(Generator)原理解读，到理解ES7的asyn...await.../">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/25/通过回调来理解Promise/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

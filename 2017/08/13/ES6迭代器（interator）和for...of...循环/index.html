@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ES6迭代器（interator）和for…of…循环或许在写ES6的代码的时候，你可能没有感觉有用过迭代器这个东西，可是ES6中的for…of…循环我们都不陌生，而for…of…循环的必要条件就是必须满足被循环的对象实现了迭代器接口才行。例子如下： Example 1234567891011var a = [1,2,3];var b = &amp;#123;    name:&apos;arvin&apos;,    ag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/08/13/ES6迭代器（interator）和for...of...循环/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ES6迭代器（interator）和for…of…循环或许在写ES6的代码的时候，你可能没有感觉有用过迭代器这个东西，可是ES6中的for…of…循环我们都不陌生，而for…of…循环的必要条件就是必须满足被循环的对象实现了迭代器接口才行。例子如下： Example 1234567891011var a = [1,2,3];var b = &amp;#123;    name:&apos;arvin&apos;,    ag">
+<meta property="og:updated_time" content="2017-08-17T02:17:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="ES6迭代器（interator）和for…of…循环或许在写ES6的代码的时候，你可能没有感觉有用过迭代器这个东西，可是ES6中的for…of…循环我们都不陌生，而for…of…循环的必要条件就是必须满足被循环的对象实现了迭代器接口才行。例子如下： Example 1234567891011var a = [1,2,3];var b = &amp;#123;    name:&apos;arvin&apos;,    ag">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ES6迭代器（interator）和for...of...循环" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/13/ES6迭代器（interator）和for...of...循环/" class="article-date">
+  <time datetime="2017-08-13T03:38:03.000Z" itemprop="datePublished">2017-08-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="ES6迭代器（interator）和for…of…循环"><a href="#ES6迭代器（interator）和for…of…循环" class="headerlink" title="ES6迭代器（interator）和for…of…循环"></a>ES6迭代器（interator）和for…of…循环</h1><p>或许在写ES6的代码的时候，你可能没有感觉有用过迭代器这个东西，可是ES6中的for…of…循环我们都不陌生，而for…of…循环的必要条件就是必须满足被循环的对象实现了迭代器接口才行。例子如下：</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> b = &#123;</div><div class="line">    name:<span class="string">'arvin'</span>,</div><div class="line">    age:<span class="number">30</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">of</span> a)&#123;</div><div class="line">    <span class="built_in">console</span>.log(i);     <span class="comment">// 结果依次是：1，2，3</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> j <span class="keyword">of</span> b)&#123;</div><div class="line">    <span class="built_in">console</span>.log(j);     <span class="comment">// TypeError: b[Symbol.iterator] is not a function</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>对于上面代码的结果我们基本都知道，可是为什么是这个结果就不会很懂了。从代码的结果可以看出，for…of…循环可行的条件是需要被循环对象实现一个以Symbol.iterator为方法属性才行。而数组对象是默认实现了该方法的，所以并未报错。现在我们就来具体实现一下这个迭代器接口。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> b = &#123;</div><div class="line">    name:<span class="string">'arvin'</span>,</div><div class="line">    age:<span class="number">30</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">Object</span>.defineProperty(b, <span class="built_in">Symbol</span>.iterator, &#123;</div><div class="line">    enumerable: <span class="literal">false</span>,</div><div class="line">    writable: <span class="literal">false</span>,</div><div class="line">    configurable: <span class="literal">true</span>,</div><div class="line">    value: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> me = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">var</span> idx = <span class="number">0</span>;</div><div class="line">        <span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(me);</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            next: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> &#123;</div><div class="line">                    value: me[keys[idx++]],</div><div class="line">                    done: (idx &gt; keys.length)</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> j <span class="keyword">of</span> b)&#123;</div><div class="line">    <span class="built_in">console</span>.log(j);     <span class="comment">// 结果依次是：arvin,30</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 下面的代码类似上面的for...of...循环的内部实现</span></div><div class="line"><span class="keyword">var</span> c = b[<span class="built_in">Symbol</span>.iterator]();</div><div class="line"><span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">  <span class="keyword">var</span> newValue = c.next();</div><div class="line">  <span class="keyword">if</span>(newValue.done)&#123;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">console</span>.log(newValue.value)   <span class="comment">// 结果依次是：arvin,30</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>从上面的这个demo可以看出，ES6的迭代器是<strong>实现要求必须要实现一个Symbol.iterator接口，并且该接口要返回一个带有next方法的对象，而且该next方法必须包含至少两个值，value以及done，前者是迭代器的输出值，后者是判断迭代终止条件。</strong>下面附上一个通用上传迭代器的运用例子：</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> getUploadObj = &#123;</div><div class="line">    getActiveUploadObj ()&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ActiveXObject(<span class="string">'TXFTNActiveX.FTNUpload'</span>);   <span class="comment">// IE上传控件</span></div><div class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    getFalshUploadObj () &#123;  </div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">new</span> ActiveXObject(<span class="string">'ShockwaveFlash.ShockwaveFlash'</span>);   <span class="comment">// Flash上传控件</span></div><div class="line">            <span class="keyword">let</span> str = <span class="string">'&lt;object type="application/x-shockwave-flash"&gt;&lt;/object&gt;'</span>;</div><div class="line">            <span class="keyword">return</span> $(str).appendTo($(<span class="string">'body'</span>));</div><div class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    getFormUploadObj () &#123;</div><div class="line">        <span class="keyword">let</span> str = <span class="string">'&lt;input name="file" type="file" calss="ui-file"/&gt;'</span>;   <span class="comment">// 表单上传</span></div><div class="line">        <span class="keyword">return</span> $(str).appendTo($(<span class="string">'body'</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 给对象getUploadObj定义iterator接口，上面演示过这段代码</span></div><div class="line"><span class="comment">// 这里可以通过工厂模式，抽象成一个专门给对象安装iterator接口的函数，这样就可以省却很多重复代码了。</span></div><div class="line"><span class="built_in">Object</span>.defineProperty(getUploadObj, <span class="built_in">Symbol</span>.iterator, &#123;</div><div class="line">    enumerable: <span class="literal">false</span>,</div><div class="line">    writable: <span class="literal">false</span>,</div><div class="line">    configurable: <span class="literal">true</span>,</div><div class="line">    value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> o = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">var</span> idx = <span class="number">0</span>;</div><div class="line">        <span class="keyword">var</span> ks = <span class="built_in">Object</span>.keys(o);</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                <span class="keyword">return</span> &#123;</div><div class="line">                    value: o[ks[idx++]],</div><div class="line">                    done: (idx &gt; ks.length)</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">iteratorUploadObj</span> (<span class="params">uploadObj</span>)</span>&#123;</div><div class="line">    <span class="comment">// 直接使用`for...of`遍历uploadObj对象</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> getUpload <span class="keyword">of</span> uploadObj)&#123;</div><div class="line">        <span class="keyword">let</span> uploadObj = getUpload();</div><div class="line">        <span class="keyword">if</span>(uploadObj) <span class="keyword">return</span> uploadObj;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> uploadObj = iteratorUploadObj(getUploadObj);</div><div class="line"><span class="built_in">console</span>.log(uploadObj);  <span class="comment">// [input, prevObject: Z.fn.init[1], context: undefined]</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/13/ES6迭代器（interator）和for...of...循环/" data-id="cj6gh2nwv0004ljdwzk8mevbj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/14/解读vue双向绑定的内部实现原理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/09/从ES6生成器(Generator)原理解读，到理解ES7的asyn...await.../" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/08/17/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/14/解读vue双向绑定的内部实现原理/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/13/ES6迭代器（interator）和for...of...循环/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/09/从ES6生成器(Generator)原理解读，到理解ES7的asyn...await.../">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/25/通过回调来理解Promise/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

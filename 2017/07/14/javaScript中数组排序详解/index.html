@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="javaScript中数组排序详解####JS对于排序提供了一个Array.prototype.sort()方法，该方法提供了两种调用方式：  Array.prototype.sort()Array.prototype.sort(compareFunction)  ####对于第一种调用方式是默认调用方式，排序算法是根据Unicode码点并按照从小到大的方向排序。 Example 12345var">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/07/14/javaScript中数组排序详解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="javaScript中数组排序详解####JS对于排序提供了一个Array.prototype.sort()方法，该方法提供了两种调用方式：  Array.prototype.sort()Array.prototype.sort(compareFunction)  ####对于第一种调用方式是默认调用方式，排序算法是根据Unicode码点并按照从小到大的方向排序。 Example 12345var">
+<meta property="og:updated_time" content="2017-07-15T02:25:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="javaScript中数组排序详解####JS对于排序提供了一个Array.prototype.sort()方法，该方法提供了两种调用方式：  Array.prototype.sort()Array.prototype.sort(compareFunction)  ####对于第一种调用方式是默认调用方式，排序算法是根据Unicode码点并按照从小到大的方向排序。 Example 12345var">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-javaScript中数组排序详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/14/javaScript中数组排序详解/" class="article-date">
+  <time datetime="2017-07-14T08:53:10.000Z" itemprop="datePublished">2017-07-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="javaScript中数组排序详解"><a href="#javaScript中数组排序详解" class="headerlink" title="javaScript中数组排序详解"></a>javaScript中数组排序详解</h1><p>####JS对于排序提供了一个Array.prototype.sort()方法，该方法提供了两种调用方式：</p>
+<blockquote>
+<p>Array.prototype.sort()<br>Array.prototype.sort(compareFunction)</p>
+</blockquote>
+<p>####对于第一种调用方式是默认调用方式，排序算法是根据<strong>Unicode码点</strong>并按照<strong>从小到大</strong>的方向排序。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">4</span>,<span class="string">'a'</span>,<span class="number">3</span>];</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'4'</span>.charCodeAt());  <span class="comment">//码点52</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'3'</span>.charCodeAt());  <span class="comment">//码点结果51</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a'</span>.charCodeAt());  <span class="comment">//码点结果97</span></div><div class="line"><span class="built_in">console</span>.log(a.sort());  <span class="comment">//结果为[3,4,'a']</span></div></pre></td></tr></table></figure>
+<p>####对于第二种调用方式是自定义排序规则，它接收的是一个函数。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">4</span>,<span class="number">3</span>,<span class="string">'a'</span>];</div><div class="line"><span class="keyword">var</span> aTemp = a.sort(<span class="function">(<span class="params">k1,k2</span>)=&gt;</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">String</span>(k1).charCodeAt()&lt;<span class="built_in">String</span>(k2).charCodeAt();</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(aTemp); <span class="comment">//结果为['a',4,3]</span></div></pre></td></tr></table></figure>
+<p><strong>注意</strong>：这里如果要比较的两个值不是都一样的，最好转成<strong>Unicode码点</strong>进行比较，这样不仅可以比较<strong>数字和字符串</strong>，也可以比较<strong>字符和数字</strong>。</p>
+<blockquote>
+<p>代码解读：Array.prototype.sort(compareFunction)采用的是冒泡排序算法，所以，传递给compareFunction函数的两个是数组中的遍历循环的一个个对象，也就是说，sort函数会将数组a的前两个对象4,3分别当参数传给compareFunction函数，并返回false，位置不变，所以，接着3会和’a’进行比较，返回true，调换位置，变成[4,’a’,3]，接着会比较4和’a’，返回true，调换位置，最终结果为[‘a’,4,3]</p>
+</blockquote>
+<p>####基于上面的理解附一个自己写的完美的sort比较函数，可以深度比较，以及支持多字段自定义比较，支持自定义降序和升序比较，有兴趣的可以阅读一下<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [</div><div class="line">    &#123;</div><div class="line">        name: <span class="string">'arvin'</span>,</div><div class="line">        year: <span class="number">10</span>,</div><div class="line">        cat: &#123;</div><div class="line">            len: <span class="string">'abc'</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        name: <span class="string">'arvin2'</span>,</div><div class="line">        year: <span class="number">11</span>,</div><div class="line">        cat: &#123;</div><div class="line">            len: <span class="string">'abc'</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        name: <span class="string">'arvin2'</span>,</div><div class="line">        year: <span class="number">11</span>,</div><div class="line">        cat: &#123;</div><div class="line">            len: <span class="string">'abcc'</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">]</div><div class="line"><span class="comment">//获取对象的的key对应的值</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getValue</span>(<span class="params">obj, key</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>) &#123;</div><div class="line">        <span class="built_in">console</span>.error(<span class="string">'不是对象'</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">undefined</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">let</span> arrTemp = <span class="built_in">Object</span>.keys(obj);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arrTemp) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> obj[item] === <span class="string">'object'</span>) &#123;</div><div class="line">            <span class="keyword">return</span> getValue(obj[item], key);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (<span class="built_in">String</span>(item) === <span class="built_in">String</span>(key) &amp;&amp; <span class="keyword">typeof</span> obj[item] !== <span class="string">'object'</span>) &#123;</div><div class="line">            <span class="keyword">return</span> obj[item];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//比较两个字符串的Unicode大小</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compareUnicode</span>(<span class="params">str1, str2,rule</span>) </span>&#123;</div><div class="line"></div><div class="line">    str1 = <span class="built_in">String</span>(str1);</div><div class="line">    str2 = <span class="built_in">String</span>(str2);</div><div class="line">    <span class="keyword">let</span> len1 = str1.length;</div><div class="line">    <span class="keyword">let</span> len2 = str2.length;</div><div class="line">    <span class="keyword">let</span> len = len1 &gt; len2 ? len2 : len1;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key = <span class="number">0</span>; key &lt; len; key++) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="built_in">Number</span>(<span class="built_in">String</span>(str1).charCodeAt(key)) !== <span class="built_in">Number</span>(<span class="built_in">String</span>(str2).charCodeAt(key))) &#123;</div><div class="line">            <span class="keyword">return</span> rule?<span class="built_in">Number</span>(<span class="built_in">String</span>(str1).charCodeAt(key)) &lt; <span class="built_in">Number</span>(<span class="built_in">String</span>(str2).charCodeAt(key)):<span class="built_in">Number</span>(<span class="built_in">String</span>(str1).charCodeAt(key)) &gt; <span class="built_in">Number</span>(<span class="built_in">String</span>(str2).charCodeAt(key));</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//判断如果str1没有大于str2</span></div><div class="line">        <span class="keyword">if</span> (key === len - <span class="number">1</span>) &#123;</div><div class="line">            <span class="comment">//判断长度</span></div><div class="line">            <span class="keyword">if</span> (len1 !== len2) &#123;</div><div class="line">                <span class="keyword">return</span> rule?len1&lt;len2:len1&gt;len2;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//深度排序数组（包括数组对象）</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepSortOn</span>(<span class="params">params</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> compareFun = compareUnicode;</div><div class="line">    <span class="keyword">let</span> rule = !!params.rankRule;</div><div class="line">    <span class="keyword">let</span> arr = params.rankArray;</div><div class="line">    <span class="keyword">let</span> args = params.rankKeys &amp;&amp; params.rankKeys.split(<span class="string">','</span>);</div><div class="line">    <span class="keyword">if</span> (!(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>) || arr.length === <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">console</span>.error(<span class="string">'只能比较并且数组不能为空'</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (arr.length === <span class="number">1</span> || !args || args.length === <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> arr;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr.sort(<span class="function">(<span class="params">$item1, $item2</span>)=&gt;</span> &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; args.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span>(compareFun(getValue($item1, args[i]), getValue($item2, args[i]),rule) !== <span class="literal">null</span>)&#123;</div><div class="line">                <span class="keyword">return</span> compareFun(getValue($item1, args[i]), getValue($item2, args[i]),rule);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (args.length - <span class="number">1</span> === i) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"><span class="comment">//比较两个字符串的Unicode大小</span></div><div class="line"><span class="keyword">var</span> b = deepSortOn(&#123;</div><div class="line">    rankArray: a,</div><div class="line">    rankRule:<span class="literal">true</span>,</div><div class="line">    rankKeys: <span class="string">'year,name,len'</span>,</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">//结果按照从小到大的顺序排列</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/14/javaScript中数组排序详解/" data-id="cj6gh2nxf000aljdwonika2ya" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/15/一段代码阐述一个轮播思路/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/14/从输入URL地址到显示完整的页面Webkit都做了哪些事情/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/08/17/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/14/解读vue双向绑定的内部实现原理/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/13/ES6迭代器（interator）和for...of...循环/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/09/从ES6生成器(Generator)原理解读，到理解ES7的asyn...await.../">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/25/通过回调来理解Promise/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

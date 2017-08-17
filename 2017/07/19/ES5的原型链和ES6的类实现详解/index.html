@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ES5的原型链和ES6的类实现详解JavaScript最初设计时受到了面相对象编程的影响，从而引入了new关键字，来实例化对象。而在ES5中new后面跟着的是构造函数（也是函数），而到了ES6则改成了clas了，而一开始new创建对象都是独立的对象，并不能像java那样拥有继承的概念，去共享变量和方法，为了解决这个问题，JavaScript就又给构造函数设计了一个prototype属性，这样所有私">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/07/19/ES5的原型链和ES6的类实现详解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ES5的原型链和ES6的类实现详解JavaScript最初设计时受到了面相对象编程的影响，从而引入了new关键字，来实例化对象。而在ES5中new后面跟着的是构造函数（也是函数），而到了ES6则改成了clas了，而一开始new创建对象都是独立的对象，并不能像java那样拥有继承的概念，去共享变量和方法，为了解决这个问题，JavaScript就又给构造函数设计了一个prototype属性，这样所有私">
+<meta property="og:updated_time" content="2017-07-24T01:32:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="ES5的原型链和ES6的类实现详解JavaScript最初设计时受到了面相对象编程的影响，从而引入了new关键字，来实例化对象。而在ES5中new后面跟着的是构造函数（也是函数），而到了ES6则改成了clas了，而一开始new创建对象都是独立的对象，并不能像java那样拥有继承的概念，去共享变量和方法，为了解决这个问题，JavaScript就又给构造函数设计了一个prototype属性，这样所有私">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ES5的原型链和ES6的类实现详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/19/ES5的原型链和ES6的类实现详解/" class="article-date">
+  <time datetime="2017-07-19T10:34:51.000Z" itemprop="datePublished">2017-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="ES5的原型链和ES6的类实现详解"><a href="#ES5的原型链和ES6的类实现详解" class="headerlink" title="ES5的原型链和ES6的类实现详解"></a>ES5的原型链和ES6的类实现详解</h1><p>JavaScript最初设计时受到了<strong>面相对象编程</strong>的影响，从而引入了<strong>new关键字</strong>，来<strong>实例化对象</strong>。而在ES5中new后面跟着的是<strong>构造函数</strong>（也是函数），而到了ES6则改成了<strong>clas</strong>了，而一开始new创建对象都是<strong>独立的对象</strong>，并不能像java那样拥有<strong>继承</strong>的概念，去<strong>共享变量和方法</strong>，为了解决这个问题，JavaScript就又给构造函数设计了一个<strong>prototype</strong>属性，这样所有<strong>私有的方法和变量</strong>就放到<strong>构造函数</strong>里面定义，而所有的<strong>公共的变量和方法</strong>就放到<strong>prototype对象</strong>里面，这样当构造函数创建一个实例化的对象的时候，就即拥有自己的私有变量和方法，也有公有的变量和方法了，实例化出来的对象的私有方法和变量修改都不会互相有影响，只有在修改公有的变量和方法的时候是对所有实例生效的。</p>
+<p>###ES5原型链<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">$Person</span>)</span>&#123;</div><div class="line">    $Person.prototype = &#123;</div><div class="line">        welcome: <span class="string">"hello"</span>,</div><div class="line">        introduce: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.welcome + <span class="string">",I am "</span> + <span class="keyword">this</span>.name;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)(Person)</div><div class="line"></div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">"arvin"</span>);</div><div class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">"peter"</span>);</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hello,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hello,I am peter</span></div><div class="line"></div><div class="line">person1.__proto__.welcome = <span class="string">"hi"</span>;</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hi,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hi,I am peter</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读：</em></strong>以上是本人推荐在使用ES5时，写原型链的方法，目的是为了代码简洁，方便复用，仅供参考。代码中在原型链上定义了一个welcome<strong>公共变量</strong>，这里要注意的是如果有同样名称的<strong>私有变量</strong>welcome时，原型方法introduce里面的this.welcome会<strong>首先查找私有变量welcome并使用</strong>，这个其实就和面相对象的<strong>覆写</strong>类似了。另外可以看出，ES5的构造函数（一般首字母大写以区分普通函数）在new的时候确实是<strong>创建了不同的区块</strong>来存放其<strong>私有变量</strong>name的值的，而对于原型链的变量welcome和方法introduce也确实是各个Person实例<strong>共用了同一块内存区域</strong>的，只要其中<strong>一个</strong>修改了原型链上的变量<strong>其他所有的对象实例</strong>再调用的时候从公共内存取出来的也就是被修改过只有的值了，这里要注意的是，构造函数new出来的实例对象，创建出来的指向原型链prototype的是其<strong>proto</strong>属性，也就是说<strong>person1.<strong>proto</strong> === Person.prototype === person2.<strong>proto</strong></strong>，这也从实际上证明了<strong>原型链对象在内存中只存了一份，是共用的</strong>。</p>
+<p>###ES6类<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(name) &#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line">    welcome = <span class="string">'hello'</span>;  <span class="comment">// S7才支持实例属性</span></div><div class="line">    introduce()&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.welcome + <span class="string">",I am "</span> + <span class="keyword">this</span>.name;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">"arvin"</span>);</div><div class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">"peter"</span>);</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hello,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hello,I am peter</span></div><div class="line"></div><div class="line">person1.__proto__.welcome = <span class="string">"hi"</span>;</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hi,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hi,I am peter</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读：</em></strong>上面暂时只是概念性的写法，事实上，ES6的类只是一个ES5原型链的语法糖而已，主要是从写法上更接近于面相对象的类而已，另外一个作用就是区分ES5的构造函数和函数之间的区分。</p>
+<p>###小结：对于ES5和ES6的类似面相对象和非面向对象的原因，以java为例提出以下几点个人见解：</p>
+<blockquote>
+<p>1、java在继承（extend）的时候，子类是会复制一遍所有父类的方法和属性（除已覆写的除外）到一个独立的内存空间中的，即所有子类之间不存在任何的关系；而这点其实就和ES5的原型继承prototype和ES6的extend有很大的不同了。</p>
+<p>2、java在new创建一个实例的时候同样是会开辟一个独立的属于该实例的内存空间，同一个类的实例之间互不影响；而ES5和ES6的创建实例的时候实例仍然是和类是存在关联的，而且是可以直接影响到类以及其他子类的公共状态和方法的。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/19/ES5的原型链和ES6的类实现详解/" data-id="cj6gh2nx30006ljdwuwiqv5lt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/20/JavaScript中线程运行机制详解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/19/对ES5中apply、call和bind三个方法的解读/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/08/17/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/14/解读vue双向绑定的内部实现原理/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/13/ES6迭代器（interator）和for...of...循环/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/09/从ES6生成器(Generator)原理解读，到理解ES7的asyn...await.../">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/25/通过回调来理解Promise/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
