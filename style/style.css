@@ -801,52 +801,52 @@ a {
   }
 }
 .post-content h1 {
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
   font-weight: 300;
   margin: 16px 0;
 }
 .post-content h1:before {
-  content: ' ';
+  content: '∮ ';
 }
 .post-content h2 {
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
   font-weight: 300;
   margin: 16px 0;
 }
 .post-content h2:before {
-  content: ' ';
+  content: '∮ ';
 }
 .post-content h3 {
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
   font-weight: 300;
   margin: 16px 0;
 }
 .post-content h3:before {
-  content: ' ';
+  content: '∮ ';
 }
 .post-content h4 {
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
   font-weight: 300;
   margin: 16px 0;
 }
 .post-content h4:before {
-  content: ' ';
+  content: '∮ ';
 }
 .post-content h5 {
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
   font-weight: 300;
   margin: 16px 0;
 }
 .post-content h5:before {
-  content: ' ';
+  content: '∮ ';
 }
 .post-content h6 {
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
   font-weight: 300;
   margin: 16px 0;
 }
 .post-content h6:before {
-  content: ' ';
+  content: '∮ ';
 }
 .post-content a {
   color: #666;
@@ -856,7 +856,7 @@ a {
   color: #000;
 }
 .post-content p {
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
   margin: 8px 0;
   line-height: 1.5em;
   font-weight: 300;
@@ -870,11 +870,11 @@ a {
 }
 .post-content strong {
   font-weight: bold;
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
 }
 .post-content i {
   font-weight: 100;
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
 }
 .post-content img {
   width: 500px;
@@ -940,7 +940,7 @@ blockquote:before {
 }
 blockquote p {
   margin: 0;
-  font-family: $font-family-use;
+  font-family: 'Optima', 'PingFang SC', 'Roboto', 'Noto SansCJK', 'Helvetica Neue', 'Helvetica', "微软雅黑", "YaHei-Consolas-Hybrid", sans-serif;
 }
 .archive {
   margin: 0 48px;
