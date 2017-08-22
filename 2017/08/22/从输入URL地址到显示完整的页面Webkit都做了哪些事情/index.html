@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 从输入URL地址到显示完整的页面Webkit都做了哪些事情 · hexo </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hexo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="webkit, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "hexo",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">hexo</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">hexo</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                从输入URL地址到显示完整的页面Webkit都做了哪些事情
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/webkit/">webkit</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h1 id="从输入URL地址到显示完整的页面Webkit都做了哪些事情"><a href="#从输入URL地址到显示完整的页面Webkit都做了哪些事情" class="headerlink" title="从输入URL地址到显示完整的页面Webkit都做了哪些事情"></a>从输入URL地址到显示完整的页面Webkit都做了哪些事情</h1><h3 id="从输入地址到获取到数据的流程"><a href="#从输入地址到获取到数据的流程" class="headerlink" title="从输入地址到获取到数据的流程"></a>从输入地址到获取到数据的流程</h3><p>1、输入URL地址,如：<a href="http://www.yejm16361.com/demo/index.html。" target="_blank" rel="external">http://www.yejm16361.com/demo/index.html。</a></p>
+<p>2、DNS解析URL地址中的域名返回IP地址（如果是主机名是IP地址就跳过该步骤）。</p>
+<p>3、 建立TCP连接，这就是经典的<strong>TCP连接中的三次握手</strong>，总的来说作用就是为了<strong>在不可靠信道上能够可靠的传输</strong>。</p>
+<p>4、浏览器向 web 服务器发送一个 HTTP 请求命令，如：GET/demo/index.html HTTP/1.1。</p>
+<p>5、浏览器向 web 服务器发送请求头信息。</p>
+<p>6、Web服务器应答，如：HTTP/1.1 200 OK，包含<strong>应答协议版本号和状态码</strong>。</p>
+<p>7、Web服务器发送应答头信息。</p>
+<p>8、Web服务器向浏览器发送数据。</p>
+<p>9、Web服务器关闭TCP连接（如果浏览器或者服务器在其头信息加入了这行代码：<strong>Connection:keep-alive就延时跳过该步骤，超时仍然会关闭TCP连接，超时时间一般是5秒或15秒</strong>）。<br><a id="more"></a></p>
+<p>###从获取到数据到显示最终完整页面的流程</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/779/339/779339663-5494140b11672" alt=""></p>
+<p>1、在输入URL之后，<strong>依赖网络模块</strong>，webkit资源加载器加载HTML网页（只要是webkit能够解析的，都会把输入的URL地址资源当成HTML解析）。</p>
+<p>2、<strong>加载完</strong>HTML网页之后，就会调动<strong>HTML解析器</strong>去<strong>解析构建节点</strong>。</p>
+<p>3、解析期间如果遇到<strong>link</strong>节点，就会调用<strong>资源加载器</strong>去<strong>异步加载</strong>，完成之后用<strong>css解析器解析执行</strong>；如果是<strong>行内样式</strong>，会立即交给<strong>CSS解析器解析执行</strong>。这里CSS解析器，解析结果会生成一个<strong>css rule tree（css规则树）</strong>。</p>
+<p>4、解析期间如果遇到<strong>script</strong>节点，就调用<strong>javascript解析器</strong>去<strong>解析并执行</strong>，这里注意的是如果是<strong>src脚本</strong>，那么在设置了<strong>H5新加的async属性</strong>的时候会<strong>异步加载加载并执行</strong>，否则会<strong>同步加载解析并执行</strong>，且<strong>阻塞dom树的创建</strong>；如果是<strong>行内脚本</strong>，那么无论怎么设置都会<strong>立即解析并执行</strong>，且<strong>阻塞dom树的创建</strong>。这里Javascript脚本执行主要是通过<strong>DOM API和CSSOM API来操作DOM树和CSS规则树</strong>。</p>
+<p>5、解析期间如果遇到节点会依赖<strong>其他资源</strong>，如：图片，视屏，语音等，webkit会调用<strong>相应的加载器利用网络模块</strong>，去<strong>异步加载解析</strong>。</p>
+<p>6、等到<strong>所有的同步和异步资源解析完成</strong>之后，浏览器引擎会把DOM树中<strong>无需渲染的节点</strong>（如display:none修饰的节点）不放进<strong>Rendering Tree（渲染树）</strong>中，并把<strong>CSS规则树中的样式附加给渲染树相应的dom节点，然后计算每一个dom节点的位置，这也就是layout（布局）和reflow（重排，回流）过程</strong>。</p>
+<p>###附录：</p>
+<p>####URL地址<br>这里的URL表示统一资源定位符，包含：</p>
+<blockquote>
+<p>1、传送协议（一般包括http、https、ftp、gopher、telnet、file等）<br>2、服务器（域名或IP地址），如果这里是域名的话，那么需要经过一个DNS查询的过程，详情见下面的DNS解析过程。<br>3、端口号（如果是HTTP默认是80端口，如果是HTTPS默认是443），可选<br>4、资源路径（path），上面的/demo/index.html就是路径，可选<br>5、参数(parameters)，可选<br>6、查询(query)，可选<br>7、信息片断（fragment），可选</p>
+</blockquote>
+<p>####DNS解析过程</p>
+<ul>
+<li>终端向Local DNS发起域名解析请求（这一步包含了查询浏览器缓存&gt;本地系统缓存&gt;路由器缓存）;</li>
+<li>Local DNS在获取到域名解析请求后首先从Root hints获取根域名服务器的地址（Root hints包含了互联网DNS根服务器的地址信息）；</li>
+<li>获取了根域名服务器地址后Local DNS向根域名服务器发起DNS解析请求，根域名服务器返回com顶级域名服务器地址；</li>
+<li>随后Local DNS向com域名服务器发起解析请求，并得到taobao.com二级域名服务器的地址；</li>
+<li>Local DNS向taobao.com二级域名服务器发起解析请求，并最终获得了www.taobao.com的IP地址信息；</li>
+</ul>
+<h4 id="常见的-Web-请求头信息"><a href="#常见的-Web-请求头信息" class="headerlink" title="常见的 Web 请求头信息"></a>常见的 Web 请求头信息</h4><p>请求头信息一般包括了：</p>
+<blockquote>
+<p>1、Method: 请求类型，常用的有get,post等。<br>2、Accept：浏览器可接受的MIME类型<br>3、Accept-Charset：浏览器可接受的字符集<br>4、Accept-Encoding：浏览器能够进行解码的数据编码方式，比如gzip<br>5、Accept-Language：浏览器所希望的语言种类，当服务器能够提供一种以上的语言版本时要用到。<br>6、Authorization：授权信息，通常出现在对服务器发送的WWW-Authenticate头的应答中<br>7、Connection：表示是否需要持久连接。<br>8、Content-Length：表示请求消息正文的长度。<br>9、Content-Type：表示请求消息类型，常用的类型包括以下四种：application/x-www-form-urlencoded，multipart/form-data，application/json，text/xml。<br>10、Cookie：本地Cookie的缓存信息。<br>11、From：请求发送者的email地址，由一些特殊的Web客户程序使用，浏览器不会用到它。<br>12、Host：初始URL中的主机和端口。<br>13、If-Modified-Since：只有当所请求的内容在指定的日期之后又经过修改才返回它，否则返回304“Not Modified”应答。<br>14、Pragma：指定“no-cache”值表示服务器必须返回一个刷新后的文档，即使它是代理服务器而且已经有了页面的本地拷贝。<br>15、Referer：包含一个URL，用户从该URL代表的页面出发访问当前请求的页面。<br>16、User-Agent：浏览器类型，如果Servlet返回的内容与浏览器类型有关则该值非常有用。<br>17、UA-Pixels，UA-Color，UA-OS，UA-CPU：由某些版本的IE浏览器所发送的非标准的请求头，表示屏幕大小、颜色深度、操作系统和CPU类型。</p>
+</blockquote>
+<p>####常见的服务端应答头信息<br> 应答头信息一般包含：</p>
+<blockquote>
+<p>1、Allow：服务器支持哪些请求方法（如GET、POST等）。<br>2、Content-Encoding：文档的编码（Encode）方法。<br>3、Content-Length：表示内容长度。<br>4、Content- Type： 表示后面的文档属于什么MIME类型。<br>5、Date：当前的GMT时间。<br>6、Expires：应该在什么时候认为文档已经过期，从而不再缓存它？<br>7、Last-Modified：文档的最后改动时间。<br>8、Location：表示客户应当到哪里去提取文档。Location通常不是直接设置的，而是通过HttpServletResponse的sendRedirect方法，该方法同时设置状态代码为302。<br>9、Refresh：表示浏览器应该在多少时间之后刷新文档，以秒计。<br>10、Server：服务器名字。Servlet一般不设置这个值，而是由Web服务器自己设置。<br>11、Set-Cookie：设置和页面关联的Cookie。<br>12、WWW-Authenticate：客户应该在Authorization头中提供什么类型的授权信息。<br>13、Access-Control-Allow-Credentials：是否跨域受信，可以跨域携带cookie信息。<br>14、Access-Control-Allow-Headers：跨域头信息设置。<br>15、Access-Control-Allow-Methods：允许跨域的方法请求。<br>16、Access-Control-Allow-Origin：允许跨域的客户端主机地址。<br>17、Access-Control-Max-Age：允许跨域连接有效时间。</p>
+</blockquote>
+<p>####reflow（重排）和repaint（重绘）区别，以及如何避免</p>
+<p>常见触发repaint场景：</p>
+<blockquote>
+<p>1、color的修改，如color=#ddd；<br>2、text-align的修改，如text-align=center；<br>3、a:hover也会造成重绘。<br>4、:hover引起的颜色等不导致页面回流的style变动。</p>
+</blockquote>
+<p>常见触发reflow场景：</p>
+<blockquote>
+<p>1、width/height/border/margin/padding的修改，如width=778px；<br>2、动画，:hover等伪类引起的元素表现改动，display=none等造成页面回流；<br>3、appendChild等DOM元素操作；<br>4、font类style的修改；<br>5、background的修改，注意着字面上可能以为是重绘，但是浏览器确实回流了，经过浏览器厂家的优化，部分background的修改只触发repaint，当然IE不用考虑；<br>6、scroll页面，这个不可避免；<br>7、resize页面，桌面版本的进行浏览器大小的缩放，移动端的话，还没玩过能拖动程序，resize程序窗口大小的多窗口操作系统。<br>8、读取元素的属性（这个无法理解，但是技术达人是这么说的，那就把它当做定理吧）：读取元素的某些属性（offsetLeft、offsetTop、offsetHeight、offsetWidth、scrollTop/Left/Width/Height、clientTop/Left/Width/Height、getComputedStyle()、currentStyle(in IE))；</p>
+</blockquote>
+<p>如何避免：</p>
+<blockquote>
+<p>1、尽可能在DOM末梢通过改变class来修改元素的style属性：尽可能的减少受影响的DOM元素。<br>避免设置多项内联样式：使用常用的class的方式进行设置样式，以避免设置样式时访问DOM的低效率。<br>2、设置动画元素position属性为fixed或者absolute：由于当前元素从DOM流中独立出来，因此受影响的只有当前元素，元素repaint。<br>3、牺牲平滑度满足性能：动画精度太强，会造成更多次的repaint/reflow，牺牲精度，能满足性能的损耗，获取性能和平滑度的平衡。<br>4、避免使用table进行布局：table的每个元素的大小以及内容的改动，都会导致整个table进行重新计算，造成大幅度的repaint或者reflow。改用div则可以进行针对性的repaint和避免不必要的reflow。<br>5、避免在CSS中使用运算式：学习CSS的时候就知道，这个应该避免，不应该加深到这一层再去了解，因为这个的后果确实非常严重，一旦存在动画性的repaint/reflow，那么每一帧动画都会进行计算，性能消耗不容小觑。</p>
+</blockquote>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/javaScript中数组排序详解/" id="art-left" class="art-right">
+                <span class="next-title">
+                    javaScript中数组排序详解<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/ES6解构赋值/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>ES6解构赋值
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>1970 ~ 2017</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>
+    hexo
+    
+</title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hexo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "hexo",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">hexo</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">hexo</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+
+<section class="posts">
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/08/22/javaScript中数组排序详解/">javaScript中数组排序详解</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <h1 id="javaScript中数组排序详解"><a href="#javaScript中数组排序详解" class="headerlink" title="javaScript中数组排序详解"></a>javaScript中数组排序详解</h1><p>####JS对于排序提供了一个Array.prototype.sort()方法，该方法提供了两种调用方式：</p>
+<blockquote>
+<p>Array.prototype.sort()<br>Array.prototype.sort(compareFunction)</p>
+</blockquote>
+<p>####对于第一种调用方式是默认调用方式，排序算法是根据<strong>Unicode码点</strong>并按照<strong>从小到大</strong>的方向排序。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">4</span>,<span class="string">'a'</span>,<span class="number">3</span>];</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'4'</span>.charCodeAt());  <span class="comment">//码点52</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'3'</span>.charCodeAt());  <span class="comment">//码点结果51</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a'</span>.charCodeAt());  <span class="comment">//码点结果97</span></div><div class="line"><span class="built_in">console</span>.log(a.sort());  <span class="comment">//结果为[3,4,'a']</span></div></pre></td></tr></table></figure>
+                    
+            
+        
+            <p class="content-link">
+                <a href="/2017/08/22/javaScript中数组排序详解/#more">
+                    <span class="iconfont icon-right">继续阅读</span>
+                </a>
+            </p>
+        
+        </div>
+        
+    </article>
+    
+
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/08/22/从输入URL地址到显示完整的页面Webkit都做了哪些事情/">从输入URL地址到显示完整的页面Webkit都做了哪些事情</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <h1 id="从输入URL地址到显示完整的页面Webkit都做了哪些事情"><a href="#从输入URL地址到显示完整的页面Webkit都做了哪些事情" class="headerlink" title="从输入URL地址到显示完整的页面Webkit都做了哪些事情"></a>从输入URL地址到显示完整的页面Webkit都做了哪些事情</h1><h3 id="从输入地址到获取到数据的流程"><a href="#从输入地址到获取到数据的流程" class="headerlink" title="从输入地址到获取到数据的流程"></a>从输入地址到获取到数据的流程</h3><p>1、输入URL地址,如：<a href="http://www.yejm16361.com/demo/index.html。" target="_blank" rel="external">http://www.yejm16361.com/demo/index.html。</a></p>
+<p>2、DNS解析URL地址中的域名返回IP地址（如果是主机名是IP地址就跳过该步骤）。</p>
+<p>3、 建立TCP连接，这就是经典的<strong>TCP连接中的三次握手</strong>，总的来说作用就是为了<strong>在不可靠信道上能够可靠的传输</strong>。</p>
+<p>4、浏览器向 web 服务器发送一个 HTTP 请求命令，如：GET/demo/index.html HTTP/1.1。</p>
+<p>5、浏览器向 web 服务器发送请求头信息。</p>
+<p>6、Web服务器应答，如：HTTP/1.1 200 OK，包含<strong>应答协议版本号和状态码</strong>。</p>
+<p>7、Web服务器发送应答头信息。</p>
+<p>8、Web服务器向浏览器发送数据。</p>
+<p>9、Web服务器关闭TCP连接（如果浏览器或者服务器在其头信息加入了这行代码：<strong>Connection:keep-alive就延时跳过该步骤，超时仍然会关闭TCP连接，超时时间一般是5秒或15秒</strong>）。<br>
+                    
+            
+        
+            <p class="content-link">
+                <a href="/2017/08/22/从输入URL地址到显示完整的页面Webkit都做了哪些事情/#more">
+                    <span class="iconfont icon-right">继续阅读</span>
+                </a>
+            </p>
+        
+        </div>
+        
+    </article>
+    
+
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/08/22/ES6解构赋值/">ES6解构赋值</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <h1 id="ES6解构赋值"><a href="#ES6解构赋值" class="headerlink" title="ES6解构赋值"></a>ES6解构赋值</h1><p>ES6变量的解构赋值本质上是“模式匹配”,只要等号两边的模式相同，左边的变量就会被赋予匹配的右边的值，如果匹配不成功变量的值就等于undefined</p>
+<p>##数组的解构赋值<br>ES6中只要某种数据有Iterator接口（也就是可以循环迭代），都可以进行数组的解构赋值。<br><strong>Example1</strong>：数组的解构</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> [a,b,c] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> [d,[e],...f] = [<span class="number">4</span>,[<span class="number">5</span>],<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>];</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">//结果为1，b,c结果是2，3</span></div><div class="line"><span class="built_in">console</span>.log(e,f) <span class="comment">//e结果为5，f的结果是一个数组：[6,7,8]</span></div></pre></td></tr></table></figure>
+<p><strong>Example2</strong>：Set解构赋值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> [x,y] = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>,<span class="number">2</span>]);</div><div class="line"><span class="built_in">console</span>.log(x,y);   <span class="comment">//结果为1和2</span></div></pre></td></tr></table></figure>
+                    
+            
+        
+            <p class="content-link">
+                <a href="/2017/08/22/ES6解构赋值/#more">
+                    <span class="iconfont icon-right">继续阅读</span>
+                </a>
+            </p>
+        
+        </div>
+        
+    </article>
+    
+
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/08/22/ES5和ES6中的变量声明提升/">ES5和ES6中的变量声明提升</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <p>##ES5和ES6中的变量声明提升</p>
+<p><strong>Example1</strong>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a=<span class="number">2</span>;</div><div class="line"><span class="keyword">var</span> a;</div><div class="line"><span class="built_in">console</span>.log( a );   <span class="comment">//结果为2</span></div></pre></td></tr></table></figure>
+<p><strong>Example2</strong>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log( a );   <span class="comment">//结果是undefined</span></div><div class="line"><span class="keyword">var</span> a=<span class="number">2</span>;</div></pre></td></tr></table></figure>
+                    
+            
+        
+            <p class="content-link">
+                <a href="/2017/08/22/ES5和ES6中的变量声明提升/#more">
+                    <span class="iconfont icon-right">继续阅读</span>
+                </a>
+            </p>
+        
+        </div>
+        
+    </article>
+    
+
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/08/22/闭包/">闭包</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p><strong>闭包的目的</strong>：封装内部实现，构建私有作用域， <em>暴露公有的API</em> 。<br><strong>闭包的晦涩定义</strong>：当函数可以记住并访问所在的词法作用域时，就产生了闭包，即使函数是在当前词法作用域之外执行。<br><strong>闭包的简单定义</strong>：一个函数中定义了另一个函数。<br><strong>Example1</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; </div><div class="line">	<span class="keyword">var</span> a=<span class="number">2</span>;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123; </div><div class="line">		<span class="built_in">console</span>.log( a ); <span class="comment">// 2</span></div><div class="line">	&#125;</div><div class="line">	bar(); </div><div class="line">&#125;</div><div class="line">foo();</div></pre></td></tr></table></figure>
+                    
+            
+        
+            <p class="content-link">
+                <a href="/2017/08/22/闭包/#more">
+                    <span class="iconfont icon-right">继续阅读</span>
+                </a>
+            </p>
+        
+        </div>
+        
+    </article>
+    
+
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/08/22/ES5和ES6作用域/">ES5和ES6作用域</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <h1 id="ES5和ES6作用域"><a href="#ES5和ES6作用域" class="headerlink" title="ES5和ES6作用域"></a>ES5和ES6作用域</h1><p>##ES5的块级作用域</p>
+<p>####ES5的块级作用域是一个伪块级作用域，代码块：{}，它的块里面和块外面都是共用一个作用域，即：<br><strong>Example:</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="keyword">var</span> a =<span class="number">3</span>;</div><div class="line">	<span class="built_in">console</span>.log(a); <span class="comment">//结果为3   </span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">//结果为3</span></div></pre></td></tr></table></figure>
+<p><strong>Example:</strong><br>ES5的伪块级作用域另外一个典型的例子如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [];</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">	a.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(i);</div><div class="line">	&#125;);</div><div class="line">&#125;</div><div class="line">a[<span class="number">0</span>](); <span class="comment">//预期结果是0，实际结果是10</span></div></pre></td></tr></table></figure>
+<p><strong><em>注意</em></strong>：出现上述现象的主要原因是使用var定义的变量 <em>i</em> 是一个全局变量，导致真正在调用的时候虽然循环了10次，可是最终十次都是只修改了全局变量 <em>i</em> ,并没有区分出私有作用域。与之相反的两个例子如下：<br>
+                    
+            
+        
+            <p class="content-link">
+                <a href="/2017/08/22/ES5和ES6作用域/#more">
+                    <span class="iconfont icon-right">继续阅读</span>
+                </a>
+            </p>
+        
+        </div>
+        
+    </article>
+    
+
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月21日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/08/21/对ES5中apply、call和bind三个方法的解读/">对ES5中apply、call和bind三个方法的解读</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <h1 id="ES6迭代器（interator）和for…of…循环"><a href="#ES6迭代器（interator）和for…of…循环" class="headerlink" title="ES6迭代器（interator）和for…of…循环"></a>ES6迭代器（interator）和for…of…循环</h1><p>或许在写ES6的代码的时候，你可能没有感觉有用过迭代器这个东西，可是ES6中的for…of…循环我们都不陌生，而for…of…循环的必要条件就是必须满足被循环的对象实现了迭代器接口才行。例子如下：</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> b = &#123;</div><div class="line">		name:<span class="string">'arvin'</span>,</div><div class="line">		age:<span class="number">30</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">of</span> a)&#123;</div><div class="line">		<span class="built_in">console</span>.log(i);     <span class="comment">// 结果依次是：1，2，3</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> j <span class="keyword">of</span> b)&#123;</div><div class="line">		<span class="built_in">console</span>.log(j);     <span class="comment">// TypeError: b[Symbol.iterator] is not a function</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+                    
+            
+        
+            <p class="content-link">
+                <a href="/2017/08/21/对ES5中apply、call和bind三个方法的解读/#more">
+                    <span class="iconfont icon-right">继续阅读</span>
+                </a>
+            </p>
+        
+        </div>
+        
+    </article>
+    
+
+    
+</section>
+    
+    <nav class="pagination">
+        <a class="extend prev" rel="prev" href="/">< 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>1970 ~ 2017</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 一段代码阐述一个轮播思路 · hexo </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hexo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="轮播, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "hexo",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">hexo</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">hexo</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                一段代码阐述一个轮播思路
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/轮播/">轮播</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h1 id="一段代码阐述一个轮播思路"><a href="#一段代码阐述一个轮播思路" class="headerlink" title="一段代码阐述一个轮播思路"></a>一段代码阐述一个轮播思路</h1><p>####不BB，直接上代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> <span class="keyword">if</span> (direction === <span class="string">'next'</span>) &#123;</div><div class="line"><span class="number">2.</span>     <span class="keyword">this</span>.index = nextIndex;</div><div class="line"><span class="number">3.</span>     <span class="comment">/*如果是下一个，那就先吧下个的dom设置成none来移动位置，防止用户看到*/</span></div><div class="line"><span class="number">4.</span>     nextEl.style.display = <span class="string">'none'</span>;</div><div class="line"><span class="number">5.</span>     nextEl.style.webkitTransition = <span class="string">''</span>;</div><div class="line"><span class="number">6.</span>     currentEl.style.display = <span class="string">'block'</span>;</div><div class="line"><span class="number">7.</span>     currentEl.style.webkitTransition = <span class="string">'-webkit-transform '</span> + <span class="keyword">this</span>.speed + <span class="string">'ms ease-in-out'</span>;</div><div class="line"><span class="number">8.</span>     setTimeout(<span class="function"><span class="params">()</span>=&gt;</span> &#123;</div><div class="line"><span class="number">9.</span>         <span class="comment">/*将下个放到指定的位置*/</span></div><div class="line"><span class="number">10.</span>         nextEl.style.webkitTransform = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? <span class="string">`translate3d(100%, 0, 0)`</span> : <span class="string">`translate3d(0, 100%, 0)`</span>;</div><div class="line"><span class="number">11.</span>         nextEl.style.display = <span class="string">'block'</span>;</div><div class="line"><span class="number">12.</span>         nextEl.style.webkitTransition = <span class="string">'-webkit-transform '</span> + <span class="keyword">this</span>.speed + <span class="string">'ms ease-in-out'</span>;</div><div class="line"><span class="number">13.</span>         setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line"><span class="number">14.</span>             <span class="comment">/*开始轮播*/</span></div><div class="line"><span class="number">15.</span>             currentEl.style.webkitTransform = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? <span class="string">`translate3d(-100%, 0, 0)`</span> : <span class="string">`translate3d(0, -100%, 0)`</span>;</div><div class="line"><span class="number">16.</span>             nextEl.style.webkitTransform = <span class="string">`translate3d(0, 0, 0)`</span>;</div><div class="line"><span class="number">17.</span>         &#125;, <span class="number">20</span>);</div><div class="line"><span class="number">18.</span>     &#125;, <span class="number">10</span>);</div><div class="line"><span class="number">19.</span> &#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><strong>注意</strong>：以上只是主思路代码，完整的代码解读完之后会贴出来供大家参考。<br><a id="more"></a><br><strong>代码解读：</strong>思路是先判断<strong>滚动方向</strong>，如果是向<strong>下一个节点</strong>那我就准备<strong>下一个节点到指定位置</strong>（仅适合界面一次展示一个轮播节点），如果直接移动到指定位置肯定是不合理的，因为节点直接移动会让用户在浏览器界面看到，可是节点是肯定要移动啊，思路很简单，那我给节点穿一件隐身衣（display:none）,之后再移动到指定位置用户不就看不到了，但是注意这里存在一个问题，如果直接设置设置display：none之后立马就移动位置的话会存在一个问题，移动的效果用户仍然能看的到，这是因为非异步的JS代码在执行的过程中是会阻止浏览器的绘图和重绘的，所以为了绕开浏览器这个机制那就使用异步好了（setTimeout）,下一个节点的位置现在已经准备好了，现在如果还是直接移动的话，又会存在一个问题下一个节点竟然看不到移动，这是因为我们在准备节点的节点的时候已经将它隐藏了，所以为了让用户看到就不得不把隐身衣脱了（display:block）才行，这样又得加一个异步（setTimeout）才能生效了，现在就可以安心的执行当前节点和早已就绪的下一个节点了。</p>
+</blockquote>
+<p>##完整代码如下：<br>下面的轮播JS部分的代码是vue写的，主要功能包括了垂直轮播，水平轮播，手势轮播等几个轮播的主要功能</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">	name: <span class="string">'swipe'</span>,</div><div class="line">	props: &#123;</div><div class="line">		<span class="comment">/*默认是水平滚动*/</span></div><div class="line">		toward: &#123;</div><div class="line">			type: <span class="built_in">String</span>,</div><div class="line">			<span class="keyword">default</span>: <span class="string">'vertical'</span></div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*是否展示指示标志*/</span></div><div class="line">		showIndicators: &#123;</div><div class="line">			type: <span class="built_in">Boolean</span>,</div><div class="line">			<span class="keyword">default</span>: <span class="literal">true</span></div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*滚动速度*/</span></div><div class="line">		speed: &#123;</div><div class="line">			type: <span class="built_in">Number</span>,</div><div class="line">			<span class="keyword">default</span>: <span class="number">300</span></div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*默认下标从哪儿开始*/</span></div><div class="line">		defaultIndex: &#123;</div><div class="line">			type: <span class="built_in">Number</span>,</div><div class="line">			<span class="keyword">default</span>: <span class="number">0</span></div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*自动滚动间隔*/</span></div><div class="line">		interval: &#123;</div><div class="line">			type: <span class="built_in">Number</span>,</div><div class="line">			<span class="keyword">default</span>: <span class="number">3000</span></div><div class="line">		&#125;</div><div class="line">	&#125;,</div><div class="line">	data() &#123;</div><div class="line">		<span class="keyword">return</span> &#123;</div><div class="line">			dots: [],    <span class="comment">// 页面标记圆点</span></div><div class="line">			index: <span class="keyword">this</span>.defaultIndex,   <span class="comment">//当前页面的下标</span></div><div class="line">			pageEls: [],   <span class="comment">// 所有的子轮播项集合</span></div><div class="line">			timer: <span class="literal">null</span>, <span class="comment">//轮播定时器对象</span></div><div class="line">			noSwipe: <span class="literal">false</span>,  <span class="comment">//禁止滚动</span></div><div class="line">			startPosition: <span class="string">''</span>,  <span class="comment">//touch的起始位置</span></div><div class="line">			currentPosition: <span class="string">''</span>,  <span class="comment">//touch的目前位置</span></div><div class="line">			translatePosition: <span class="string">''</span>,  <span class="comment">//touch位移的位置</span></div><div class="line">			distance: <span class="number">10</span>,    <span class="comment">//touch的位移大于10的时候生效</span></div><div class="line">		&#125;</div><div class="line">	&#125;,</div><div class="line">	watch: &#123;&#125;,</div><div class="line">	beforeMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	&#125;,</div><div class="line">	mounted()&#123;</div><div class="line">		<span class="keyword">this</span>.initSwipe();</div><div class="line">		<span class="keyword">this</span>.swipeTimeout();</div><div class="line">		<span class="keyword">this</span>.initTouchEvent();</div><div class="line">	&#125;,</div><div class="line">	computed: &#123;</div><div class="line">		getNum()&#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.pageEls.length;</div><div class="line">		&#125;,</div><div class="line">	&#125;,</div><div class="line">	methods: &#123;</div><div class="line">		<span class="comment">/*手动上一张*/</span></div><div class="line">		prev()&#123;</div><div class="line">			<span class="built_in">window</span>.clearTimeout(<span class="keyword">this</span>.timer);</div><div class="line">			<span class="keyword">this</span>.swipeTimeout(<span class="string">'prev'</span>);</div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*手动下一张*/</span></div><div class="line">		next()&#123;</div><div class="line">			<span class="built_in">window</span>.clearTimeout(<span class="keyword">this</span>.timer);</div><div class="line">			<span class="keyword">this</span>.swipeTimeout(<span class="string">'next'</span>);</div><div class="line">		&#125;,</div><div class="line">		initTouchEvent()&#123;</div><div class="line">			<span class="keyword">let</span> dom = <span class="keyword">this</span>.$el.querySelector(<span class="string">'.swipe-warp'</span>);</div><div class="line">			dom.addEventListener(<span class="string">'touchstart'</span>, <span class="keyword">this</span>.handleTouchStart);</div><div class="line">			dom.addEventListener(<span class="string">'touchmove'</span>, <span class="keyword">this</span>.handleTouchMove);</div><div class="line">			dom.addEventListener(<span class="string">'touchend'</span>, <span class="keyword">this</span>.handleTouchEnd);</div><div class="line">			<span class="built_in">console</span>.log(dom);</div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*初始化轮播节点*/</span></div><div class="line">		initSwipe()&#123;</div><div class="line">			<span class="keyword">var</span> children = <span class="keyword">this</span>.$children;</div><div class="line">			<span class="keyword">if</span> (children.length === <span class="number">1</span>) &#123;</div><div class="line">				<span class="keyword">this</span>.noSwipe = <span class="literal">false</span>;</div><div class="line">				<span class="keyword">return</span>;</div><div class="line">			&#125;</div><div class="line">			children.forEach(<span class="function">(<span class="params">child, _index</span>)=&gt;</span> &#123;</div><div class="line">				<span class="keyword">this</span>.pageEls.push(child.$el);</div><div class="line">			&#125;);</div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*定时轮播*/</span></div><div class="line">		swipeTimeout(toward = <span class="string">'next'</span>)&#123;</div><div class="line">			<span class="keyword">this</span>.translate(toward, ()=&gt; &#123;</div><div class="line">				<span class="keyword">this</span>.timer = <span class="built_in">window</span>.setTimeout(<span class="function"><span class="params">()</span>=&gt;</span> &#123;</div><div class="line">					<span class="keyword">this</span>.swipeTimeout(<span class="string">'next'</span>);</div><div class="line">				&#125;, <span class="keyword">this</span>.interval);</div><div class="line">			&#125;);</div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*滚动方法*/</span></div><div class="line">		translate(direction = <span class="string">'next'</span>, cb)&#123;</div><div class="line">			<span class="keyword">let</span> length = <span class="keyword">this</span>.pageEls.length;</div><div class="line">			<span class="keyword">let</span> currentIndex = <span class="keyword">this</span>.index;</div><div class="line">			<span class="keyword">let</span> currentEl = <span class="keyword">this</span>.pageEls[currentIndex];</div><div class="line">			<span class="keyword">let</span> nextIndex = ((<span class="keyword">this</span>.index + <span class="number">1</span>) &gt; (length - <span class="number">1</span>)) ? <span class="number">0</span> : (<span class="keyword">this</span>.index + <span class="number">1</span>);</div><div class="line">			<span class="keyword">let</span> nextEl = <span class="keyword">this</span>.pageEls[nextIndex];</div><div class="line">			<span class="keyword">let</span> pervIndex = (<span class="keyword">this</span>.index - <span class="number">1</span>) &lt; <span class="number">0</span> ? (length - <span class="number">1</span>) : (<span class="keyword">this</span>.index - <span class="number">1</span>);</div><div class="line">			<span class="keyword">let</span> pervEl = <span class="keyword">this</span>.pageEls[pervIndex];</div><div class="line">			<span class="keyword">if</span> (direction === <span class="string">'next'</span>) &#123;</div><div class="line">				<span class="keyword">this</span>.index = nextIndex;</div><div class="line">				<span class="comment">/*如果是下一个，那就先吧下个的dom设置成none来移动位置，防止用户看到*/</span></div><div class="line">				nextEl.style.display = <span class="string">'none'</span>;</div><div class="line">				nextEl.style.webkitTransition = <span class="string">''</span>;</div><div class="line">				currentEl.style.display = <span class="string">'block'</span>;</div><div class="line">				currentEl.style.webkitTransition = <span class="string">'-webkit-transform '</span> + <span class="keyword">this</span>.speed + <span class="string">'ms ease-in-out'</span>;</div><div class="line">				setTimeout(<span class="function"><span class="params">()</span>=&gt;</span> &#123;</div><div class="line">					<span class="comment">/*将下个放到指定的位置*/</span></div><div class="line">					nextEl.style.webkitTransform = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? <span class="string">`translate3d(100%, 0, 0)`</span> : <span class="string">`translate3d(0, 100%, 0)`</span>;</div><div class="line">					nextEl.style.display = <span class="string">'block'</span>;</div><div class="line">					nextEl.style.webkitTransition = <span class="string">'-webkit-transform '</span> + <span class="keyword">this</span>.speed + <span class="string">'ms ease-in-out'</span>;</div><div class="line">					setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">						<span class="comment">/*开始轮播*/</span></div><div class="line">						currentEl.style.webkitTransform = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? <span class="string">`translate3d(-100%, 0, 0)`</span> : <span class="string">`translate3d(0, -100%, 0)`</span>;</div><div class="line">						nextEl.style.webkitTransform = <span class="string">`translate3d(0, 0, 0)`</span>;</div><div class="line">					&#125;, <span class="number">20</span>);</div><div class="line">				&#125;, <span class="number">10</span>);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">this</span>.index = pervIndex;</div><div class="line">				<span class="comment">/*如果是上一个，那就先吧上个的dom设置成none来移动位置，防止用户看到*/</span></div><div class="line">				pervEl.style.display = <span class="string">'none'</span>;</div><div class="line">				pervEl.style.webkitTransition = <span class="string">''</span>;</div><div class="line">				currentEl.style.display = <span class="string">'block'</span>;</div><div class="line">				currentEl.style.webkitTransition = <span class="string">'-webkit-transform '</span> + <span class="keyword">this</span>.speed + <span class="string">'ms ease-in-out'</span>;</div><div class="line">				setTimeout(<span class="function"><span class="params">()</span>=&gt;</span> &#123;</div><div class="line">					<span class="comment">/*将上个放到指定的位置*/</span></div><div class="line">					pervEl.style.webkitTransform = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? <span class="string">`translate3d(-100%, 0, 0)`</span> : <span class="string">`translate3d(0, -100%, 0)`</span>;</div><div class="line">					pervEl.style.display = <span class="string">'block'</span>;</div><div class="line">					pervEl.style.webkitTransition = <span class="string">'-webkit-transform '</span> + <span class="keyword">this</span>.speed + <span class="string">'ms ease-in-out'</span>;</div><div class="line">					setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">						<span class="comment">/*开始轮播*/</span></div><div class="line">						currentEl.style.webkitTransform = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? <span class="string">`translate3d(100%, 0, 0)`</span> : <span class="string">`translate3d(0, 100%, 0)`</span>;</div><div class="line">						pervEl.style.webkitTransform = <span class="string">`translate3d(0, 0, 0)`</span>;</div><div class="line">					&#125;, <span class="number">20</span>);</div><div class="line">				&#125;, <span class="number">10</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">this</span>.once(currentEl, <span class="string">'webkitTransitionEnd'</span>, ()=&gt; &#123;</div><div class="line">				cb &amp;&amp; cb();</div><div class="line">			&#125;);</div><div class="line">		&#125;,</div><div class="line">		handleTouchStart($evnet)&#123;</div><div class="line">			<span class="keyword">this</span>.startPosition = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? $evnet.touches[<span class="number">0</span>].clientX : $evnet.touches[<span class="number">0</span>].clientY;</div><div class="line">		&#125;,</div><div class="line">		handleTouchMove($evnet)&#123;</div><div class="line">			<span class="keyword">this</span>.currentPosition = <span class="keyword">this</span>.toward === <span class="string">'horizontal'</span> ? $evnet.touches[<span class="number">0</span>].clientX : $evnet.touches[<span class="number">0</span>].clientY;</div><div class="line">			<span class="keyword">this</span>.translatePosition = <span class="keyword">this</span>.currentPosition - <span class="keyword">this</span>.startPosition;</div><div class="line">			<span class="keyword">this</span>.translatePosition !== <span class="number">0</span> &amp;&amp; <span class="built_in">window</span>.clearTimeout(<span class="keyword">this</span>.timer);</div><div class="line">			$evnet.preventDefault();</div><div class="line">			$evnet.stopPropagation();</div><div class="line">		&#125;,</div><div class="line">		handleTouchEnd($evnet)&#123;</div><div class="line">			<span class="keyword">this</span>.translatePosition &lt; <span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.translatePosition &lt; -<span class="keyword">this</span>.distance &amp;&amp; <span class="keyword">this</span>.swipeTimeout(<span class="string">'next'</span>);</div><div class="line">			<span class="keyword">this</span>.translatePosition &gt; <span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.translatePosition &gt; <span class="keyword">this</span>.distance &amp;&amp; <span class="keyword">this</span>.swipeTimeout(<span class="string">'prev'</span>);</div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*管理事件*/</span></div><div class="line">		once(el, event, fn) &#123;</div><div class="line">			<span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line">			<span class="keyword">var</span> listener = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">				<span class="keyword">if</span> (fn) &#123;</div><div class="line">					fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">				&#125;</div><div class="line">				that.off(el, event, listener);</div><div class="line">			&#125;;</div><div class="line">			<span class="keyword">this</span>.on(el, event, listener);</div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*监听事件*/</span></div><div class="line">		on(element, event, handler)&#123;</div><div class="line">			<span class="keyword">if</span> (element &amp;&amp; event &amp;&amp; handler) &#123;</div><div class="line">				element.addEventListener(event, handler, <span class="literal">false</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;,</div><div class="line">		<span class="comment">/*移除事件*/</span></div><div class="line">		off(element, event, handler) &#123;</div><div class="line">			<span class="keyword">if</span> (element &amp;&amp; event) &#123;</div><div class="line">				element.removeEventListener(event, handler, <span class="literal">false</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/ES5和ES6数组遍历方法详解/" id="art-left" class="art-right">
+                <span class="next-title">
+                    ES5和ES6数组遍历方法详解<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/javaScript中数组排序详解/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>javaScript中数组排序详解
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>1970 ~ 2017</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

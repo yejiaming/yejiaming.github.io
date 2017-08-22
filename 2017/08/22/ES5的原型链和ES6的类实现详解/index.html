@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>
-  
-    归档 · hexo
-  
-</title>
+    <title> ES5的原型链和ES6的类实现详解 · hexo </title>
     <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -20,6 +16,8 @@
 
 
 
+
+    <meta name="keywords" content="原型链, Nlvi" />
 
 <link rel="stylesheet" href="/style/style.css">
 <script src="/script/jquery.min.js"></script>
@@ -211,207 +209,71 @@
         <main class="main" id="main">
             
     
-    <div class="archive syuanpi riseIn-light" id="archive">
-        
-            <h1 class="archive-title">Total</h1>
-            <span class="archive-num">一共有 17 篇文章</span>
-        
-        <div class="archive-list">
-            <ul>
-        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                ES5的原型链和ES6的类实现详解
+            
+            </h1>
             
                 
-                
-                
+                    <div class="post-tags syuanpi riseIn-light back-3">
                     
-                     
-                        <h2 class="archive-year"> 2017 </h2>
+                        <a href="/tags/原型链/">原型链</a>
                     
+                    </div>
                 
             
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
             
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/解读vue双向绑定的内部实现原理/">解读vue双向绑定的内部实现原理</a>
-                </span>
-            </li>
+                <h1 id="ES5的原型链和ES6的类实现详解"><a href="#ES5的原型链和ES6的类实现详解" class="headerlink" title="ES5的原型链和ES6的类实现详解"></a>ES5的原型链和ES6的类实现详解</h1><p>JavaScript最初设计时受到了<strong>面相对象编程</strong>的影响，从而引入了<strong>new关键字</strong>，来<strong>实例化对象</strong>。而在ES5中new后面跟着的是<strong>构造函数</strong>（也是函数），而到了ES6则改成了<strong>clas</strong>了，而一开始new创建对象都是<strong>独立的对象</strong>，并不能像java那样拥有<strong>继承</strong>的概念，去<strong>共享变量和方法</strong>，为了解决这个问题，JavaScript就又给构造函数设计了一个<strong>prototype</strong>属性，这样所有<strong>私有的方法和变量</strong>就放到<strong>构造函数</strong>里面定义，而所有的<strong>公共的变量和方法</strong>就放到<strong>prototype对象</strong>里面，这样当构造函数创建一个实例化的对象的时候，就即拥有自己的私有变量和方法，也有公有的变量和方法了，实例化出来的对象的私有方法和变量修改都不会互相有影响，只有在修改公有的变量和方法的时候是对所有实例生效的。<br><a id="more"></a></p>
+<p>###ES5原型链<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">$Person</span>)</span>&#123;</div><div class="line">	$Person.prototype = &#123;</div><div class="line">		welcome: <span class="string">"hello"</span>,</div><div class="line">		introduce: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.welcome + <span class="string">",I am "</span> + <span class="keyword">this</span>.name;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;)(Person)</div><div class="line"></div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">"arvin"</span>);</div><div class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">"peter"</span>);</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hello,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hello,I am peter</span></div><div class="line"></div><div class="line">person1.__proto__.welcome = <span class="string">"hi"</span>;</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hi,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hi,I am peter</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读：</em></strong>以上是本人推荐在使用ES5时，写原型链的方法，目的是为了代码简洁，方便复用，仅供参考。代码中在原型链上定义了一个welcome<strong>公共变量</strong>，这里要注意的是如果有同样名称的<strong>私有变量</strong>welcome时，原型方法introduce里面的this.welcome会<strong>首先查找私有变量welcome并使用</strong>，这个其实就和面相对象的<strong>覆写</strong>类似了。另外可以看出，ES5的构造函数（一般首字母大写以区分普通函数）在new的时候确实是<strong>创建了不同的区块</strong>来存放其<strong>私有变量</strong>name的值的，而对于原型链的变量welcome和方法introduce也确实是各个Person实例<strong>共用了同一块内存区域</strong>的，只要其中<strong>一个</strong>修改了原型链上的变量<strong>其他所有的对象实例</strong>再调用的时候从公共内存取出来的也就是被修改过只有的值了，这里要注意的是，构造函数new出来的实例对象，创建出来的指向原型链prototype的是其<strong>proto</strong>属性，也就是说<strong>person1.<strong>proto</strong> === Person.prototype === person2.<strong>proto</strong></strong>，这也从实际上证明了<strong>原型链对象在内存中只存了一份，是共用的</strong>。</p>
+<p>###ES6类<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">	<span class="keyword">constructor</span>(name) &#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	welcome = <span class="string">'hello'</span>;  <span class="comment">// S7才支持实例属性</span></div><div class="line">	introduce()&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.welcome + <span class="string">",I am "</span> + <span class="keyword">this</span>.name;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">"arvin"</span>);</div><div class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(<span class="string">"peter"</span>);</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hello,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hello,I am peter</span></div><div class="line"></div><div class="line">person1.__proto__.welcome = <span class="string">"hi"</span>;</div><div class="line"><span class="built_in">console</span>.log(person1.introduce());   <span class="comment">// hi,I am arvin</span></div><div class="line"><span class="built_in">console</span>.log(person2.introduce());   <span class="comment">// hi,I am peter</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读：</em></strong>上面暂时只是概念性的写法，事实上，ES6的类只是一个ES5原型链的语法糖而已，主要是从写法上更接近于面相对象的类而已，另外一个作用就是区分ES5的构造函数和函数之间的区分。</p>
+<p>###小结：对于ES5和ES6的类似面相对象和非面向对象的原因，以java为例提出以下几点个人见解：</p>
+<blockquote>
+<p>1、java在继承（extend）的时候，子类是会复制一遍所有父类的方法和属性（除已覆写的除外）到一个独立的内存空间中的，即所有子类之间不存在任何的关系；而这点其实就和ES5的原型继承prototype和ES6的extend有很大的不同了。</p>
+<p>2、java在new创建一个实例的时候同样是会开辟一个独立的属于该实例的内存空间，同一个类的实例之间互不影响；而ES5和ES6的创建实例的时候实例仍然是和类是存在关联的，而且是可以直接影响到类以及其他子类的公共状态和方法的。</p>
+</blockquote>
 
+            
         
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/ES6迭代器（interator）和for-of循环/">ES6迭代器（interator）和for...of循环</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/从ES6生成器-Generator-原理解读，到理解ES7的asyn-await/">从ES6生成器(Generator)原理解读，到理解ES7的asyn...await</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/通过回调来理解Promise/">通过回调来理解Promise</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/从ES6的Proxy代理看ES5的代理如何实现/">从ES6的Proxy代理看ES5的代理如何实现</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/JavaScript中线程运行机制详解/">JavaScript中线程运行机制详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/ES5的原型链和ES6的类实现详解/">ES5的原型链和ES6的类实现详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/常用正则表达式及其思路详解/">常用正则表达式及其思路详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/ES5和ES6数组遍历方法详解/">ES5和ES6数组遍历方法详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/一段代码阐述一个轮播思路/">一段代码阐述一个轮播思路</a>
-                </span>
-            </li>
-
-        
-            </ul>
         </div>
-    </div>
+        
+            
+            
+        
+    </article>
     
-    <nav class="pagination">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2017/08/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/08/page/2/">下一页 ></a>
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/JavaScript中线程运行机制详解/" id="art-left" class="art-right">
+                <span class="next-title">
+                    JavaScript中线程运行机制详解<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/常用正则表达式及其思路详解/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>常用正则表达式及其思路详解
+                </span>
+            </a>
+        
     </nav>
 
+        
+    
 
 
         </main>
@@ -488,6 +350,8 @@ $(document).ready(function(){
 })
 </script>
     </div>
+    
+        
     
     <div class="backtop syuanpi dead toTop" id="backtop">
     <i class="iconfont icon-up"></i>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> ES6解构赋值 · hexo </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hexo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="ES6解构赋值, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "hexo",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">hexo</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">hexo</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                ES6解构赋值
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/ES6解构赋值/">ES6解构赋值</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h1 id="ES6解构赋值"><a href="#ES6解构赋值" class="headerlink" title="ES6解构赋值"></a>ES6解构赋值</h1><p>ES6变量的解构赋值本质上是“模式匹配”,只要等号两边的模式相同，左边的变量就会被赋予匹配的右边的值，如果匹配不成功变量的值就等于undefined</p>
+<p>##数组的解构赋值<br>ES6中只要某种数据有Iterator接口（也就是可以循环迭代），都可以进行数组的解构赋值。<br><strong>Example1</strong>：数组的解构</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> [a,b,c] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> [d,[e],...f] = [<span class="number">4</span>,[<span class="number">5</span>],<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>];</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">//结果为1，b,c结果是2，3</span></div><div class="line"><span class="built_in">console</span>.log(e,f) <span class="comment">//e结果为5，f的结果是一个数组：[6,7,8]</span></div></pre></td></tr></table></figure>
+<p><strong>Example2</strong>：Set解构赋值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> [x,y] = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>,<span class="number">2</span>]);</div><div class="line"><span class="built_in">console</span>.log(x,y);   <span class="comment">//结果为1和2</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><strong>Example3</strong>：Generator函数解构赋值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fun</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">let</span> a = <span class="number">0</span>;</div><div class="line">	<span class="keyword">let</span> b = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		<span class="keyword">yield</span> a;</div><div class="line">		[a,b] = [b,a+b];</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> [first,second,third,fourth,fifth,sixth] = fun();</div><div class="line"><span class="built_in">console</span>.log(sixth); <span class="comment">//结果为5</span></div></pre></td></tr></table></figure>
+<p>Example4：默认值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> [a=<span class="number">3</span>,b=<span class="number">5</span>] = [<span class="literal">undefined</span>,<span class="number">4</span>];</div><div class="line"><span class="built_in">console</span>.log(a,b); <span class="comment">//结果为3和4</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读</em></strong>：上面的代码等同于如下：<br><strong><em>Example4</em></strong>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a;</div><div class="line"><span class="keyword">var</span> b;</div><div class="line"><span class="keyword">var</span> c = [<span class="literal">undefined</span>,<span class="number">4</span>];  <span class="comment">//这步骤是另加上去作为数组引用的</span></div><div class="line"><span class="keyword">if</span>(c[<span class="number">0</span>] !== <span class="literal">undefined</span>)&#123;</div><div class="line">	a = c[<span class="number">0</span>];</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">	a = <span class="number">3</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span>(c[<span class="number">1</span>] !== <span class="literal">undefined</span>)&#123;</div><div class="line">	b = c[<span class="number">1</span>];</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">	b = <span class="number">5</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(a,b);   <span class="comment">//结果为3，4</span></div></pre></td></tr></table></figure>
+<p>##对象的解构赋值<br>数组的解构是按次序排列的，变量取值由位置决定的，而对象的属性是没有顺序的，<strong>变量</strong>必须与<strong>属性同名</strong>才能取到正确的值。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> &#123;b,a&#125; = &#123;<span class="attr">a</span>:<span class="number">3</span>,<span class="attr">b</span>:<span class="number">4</span>&#125;</div><div class="line"><span class="built_in">console</span>.log(a,b);   <span class="comment">//结果为3，4</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读</em></strong>：上面的代码等同下面的代码<br><strong><em>Example</em></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> _ab = &#123;<span class="attr">a</span>:<span class="number">3</span>,<span class="attr">b</span>:<span class="number">4</span>&#125;;</div><div class="line"><span class="keyword">var</span> b = _ab.b;</div><div class="line"><span class="keyword">var</span> a = _ab.a;</div><div class="line"><span class="built_in">console</span>.log(a,b);   <span class="comment">//结果为3，4</span></div></pre></td></tr></table></figure>
+<p><strong>注意</strong>：对象的解构相当于先定义了后一个对象变量为<strong>_ab</strong>，再对前一个对象<strong>解构</strong>出来的变量按照<strong>对象先后顺序</strong>分别进行<strong>申明</strong>并使用对象_ab去按照该<strong>变量名赋值</strong>相应的值。如果前一个对象中的<strong>变量</strong>和后一个对象中的<strong>属性</strong>不一致，直接定义是肯定赋值失败的，解决方法如下：<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> &#123;<span class="attr">b</span>:c,<span class="attr">a</span>:d&#125; = &#123;<span class="attr">a</span>:<span class="number">3</span>,<span class="attr">b</span>:<span class="number">4</span>&#125;;</div><div class="line"><span class="built_in">console</span>.log(b,c,a,d)    <span class="comment">// 分别是undefined,4,undefined,3</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读</em></strong>：上面代码等同下面的代码</p>
+<p><strong><em>Example</em></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> _ab = &#123;<span class="attr">a</span>:<span class="number">3</span>,<span class="attr">b</span>:<span class="number">4</span>&#125;;</div><div class="line"><span class="keyword">var</span> c = _ab.b;</div><div class="line"><span class="keyword">var</span> d = _ab.a;</div><div class="line"><span class="built_in">console</span>.log(b,c,a,d)    <span class="comment">// 分别是undefined,4,undefined,3</span></div></pre></td></tr></table></figure>
+<p><strong>注意</strong>：例子可以看出对象的解构的内部机制是先找到<strong>同名属性</strong>，然后再赋予相应的变量，真正被赋予的是<strong>前一个对象</strong>的<strong>后一个变量</strong>，即<strong>c,d</strong>;而不是<strong>前一个对象</strong>的<strong>前一个模式</strong>，即<strong>b,a</strong>;</p>
+<p>####发现：如果想要上一个例子的<strong>模式</strong>不为<strong>undefined</strong>，那么代码可以写成如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> e = &#123;<span class="attr">b</span>:c,<span class="attr">a</span>:d&#125; = &#123;<span class="attr">a</span>:<span class="number">3</span>,<span class="attr">b</span>:<span class="number">4</span>&#125;;</div><div class="line"><span class="built_in">console</span>.log(e.b,b,c,e.a,a,d)    <span class="comment">// 分别是4,undefined,4,3,undefined,3</span></div></pre></td></tr></table></figure>
+<p><strong>注意</strong>：以上代码在使用babel转换的时候可能会出错，只在浏览器中有用，所以最好不要代码中使用，只理解就好</p>
+<p>####对象解构赋值与数组解构赋值在申明的时候的一点区别：<br><strong>Example1</strong>：数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a;</div><div class="line">[a] = [<span class="number">3</span>]</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">//结果为3</span></div></pre></td></tr></table></figure>
+<p><strong>Example2</strong>：对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a;</div><div class="line">&#123;a&#125; = &#123;<span class="attr">a</span>:<span class="number">3</span>&#125;</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 报错：SyntaxError</span></div></pre></td></tr></table></figure>
+<p><strong><em>代码解读</em></strong>：JavaScript引擎会将<strong>[a]</strong>理解成一个数组，而将<strong>{a}</strong>理解成什么呢？对于<strong>{a}</strong>这个代码在JS中可能会存在两种解释，一种是它是一个<strong>表达式</strong>，表示含有a属性的一个<strong>对象</strong>；第二种它是一个<strong>语句(代码块)</strong>，为了消除这种歧义，js开发人员规定只要<strong>行首是大括号</strong>的，一律解析成<strong>代码块</strong>。解决上诉问题的代码如下：<br><strong><em>Example3</em></strong>：对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a;</div><div class="line">(&#123;a&#125; = &#123;<span class="attr">a</span>:<span class="number">3</span>&#125;)   <span class="comment">//JS中括号中的都是表达式</span></div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 结果3</span></div></pre></td></tr></table></figure>
+<p>###解构赋值中的圆括号问题<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> [(a)] = [<span class="number">1</span>];</div><div class="line"><span class="keyword">let</span> &#123;(b):c&#125; = &#123;<span class="attr">b</span>:<span class="number">2</span>&#125;;</div><div class="line"><span class="keyword">let</span> &#123;<span class="attr">d</span>:(e)&#125; = &#123;<span class="attr">d</span>:<span class="number">2</span>&#125;;    <span class="comment">//都报错：SyntaxError</span></div></pre></td></tr></table></figure>
+<p><strong>注意</strong>：以上出现错误的原因都是：1、它们都是申明语句；2、圆括号中的都属于模式中的一部分。要同时不满足以上两个条件是比较困难的，所以，ES6规定，只要可能导致解构歧义就不得使用圆括号。所以，建议在写的过程中除了上面的那个对象圆括号的例子可以使用外，其他的情况都不能使用。</p>
+<p>###ES6中还存在字符串、数组、布尔值等各种解构赋值，基本概念和原理都和对象的解构赋值类似，这里就不在全部列举了。</p>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/从输入URL地址到显示完整的页面Webkit都做了哪些事情/" id="art-left" class="art-right">
+                <span class="next-title">
+                    从输入URL地址到显示完整的页面Webkit都做了哪些事情<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/ES5和ES6中的变量声明提升/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>ES5和ES6中的变量声明提升
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>1970 ~ 2017</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

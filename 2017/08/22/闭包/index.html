@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>
-  
-    归档 · hexo
-  
-</title>
+    <title> 闭包 · hexo </title>
     <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -20,6 +16,8 @@
 
 
 
+
+    <meta name="keywords" content="闭包, Nlvi" />
 
 <link rel="stylesheet" href="/style/style.css">
 <script src="/script/jquery.min.js"></script>
@@ -211,207 +209,64 @@
         <main class="main" id="main">
             
     
-    <div class="archive syuanpi riseIn-light" id="archive">
-        
-            <h1 class="archive-title">Total</h1>
-            <span class="archive-num">一共有 17 篇文章</span>
-        
-        <div class="archive-list">
-            <ul>
-        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                闭包
+            
+            </h1>
             
                 
-                
-                
+                    <div class="post-tags syuanpi riseIn-light back-3">
                     
-                     
-                        <h2 class="archive-year"> 2017 </h2>
+                        <a href="/tags/闭包/">闭包</a>
                     
+                    </div>
                 
             
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
             
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/解读vue双向绑定的内部实现原理/">解读vue双向绑定的内部实现原理</a>
-                </span>
-            </li>
+                <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p><strong>闭包的目的</strong>：封装内部实现，构建私有作用域， <em>暴露公有的API</em> 。<br><strong>闭包的晦涩定义</strong>：当函数可以记住并访问所在的词法作用域时，就产生了闭包，即使函数是在当前词法作用域之外执行。<br><strong>闭包的简单定义</strong>：一个函数中定义了另一个函数。<br><strong>Example1</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; </div><div class="line">	<span class="keyword">var</span> a=<span class="number">2</span>;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123; </div><div class="line">		<span class="built_in">console</span>.log( a ); <span class="comment">// 2</span></div><div class="line">	&#125;</div><div class="line">	bar(); </div><div class="line">&#125;</div><div class="line">foo();</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><strong><em>注意</em></strong>：<br><strong>Example2</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; </div><div class="line">	<span class="keyword">var</span> a=<span class="number">2</span>;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123; </div><div class="line">		<span class="built_in">console</span>.log( a );</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> bar; </div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> baz = foo();</div><div class="line">baz(); <span class="comment">// 2 —— 这就是闭包的效果。</span></div></pre></td></tr></table></figure>
 
+            
         
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/ES6迭代器（interator）和for-of循环/">ES6迭代器（interator）和for...of循环</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/从ES6生成器-Generator-原理解读，到理解ES7的asyn-await/">从ES6生成器(Generator)原理解读，到理解ES7的asyn...await</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/通过回调来理解Promise/">通过回调来理解Promise</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/从ES6的Proxy代理看ES5的代理如何实现/">从ES6的Proxy代理看ES5的代理如何实现</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/JavaScript中线程运行机制详解/">JavaScript中线程运行机制详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/ES5的原型链和ES6的类实现详解/">ES5的原型链和ES6的类实现详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/常用正则表达式及其思路详解/">常用正则表达式及其思路详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/ES5和ES6数组遍历方法详解/">ES5和ES6数组遍历方法详解</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/22/一段代码阐述一个轮播思路/">一段代码阐述一个轮播思路</a>
-                </span>
-            </li>
-
-        
-            </ul>
         </div>
-    </div>
+        
+            
+            
+        
+    </article>
     
-    <nav class="pagination">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2017/08/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/08/page/2/">下一页 ></a>
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/ES5和ES6中的变量声明提升/" id="art-left" class="art-right">
+                <span class="next-title">
+                    ES5和ES6中的变量声明提升<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/ES5和ES6作用域/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>ES5和ES6作用域
+                </span>
+            </a>
+        
     </nav>
 
+        
+    
 
 
         </main>
@@ -488,6 +343,8 @@ $(document).ready(function(){
 })
 </script>
     </div>
+    
+        
     
     <div class="backtop syuanpi dead toTop" id="backtop">
     <i class="iconfont icon-up"></i>

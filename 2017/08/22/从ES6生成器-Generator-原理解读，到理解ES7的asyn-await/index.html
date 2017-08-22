@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 从ES6生成器(Generator)原理解读，到理解ES7的asyn...await · hexo </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hexo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="Generator, asyn...await, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "hexo",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">hexo</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">hexo</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                从ES6生成器(Generator)原理解读，到理解ES7的asyn...await
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Generator/">Generator</a>
+                    
+                        <a href="/tags/asyn-await/">asyn...await</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h1 id="从ES6生成器-Generator-原理解读，到理解ES7的asyn…await…"><a href="#从ES6生成器-Generator-原理解读，到理解ES7的asyn…await…" class="headerlink" title="从ES6生成器(Generator)原理解读，到理解ES7的asyn…await…"></a>从ES6生成器(Generator)原理解读，到理解ES7的asyn…await…</h1><p>##ES6生成器原理解读<br>生成器从本质上来说，是一种特殊的<a href="https://segmentfault.com/a/1190000010637886" target="_blank" rel="external">迭代器</a>。为什么这么说呢，下面来看一段代码：</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params">arg</span>)</span>&#123;</div><div class="line">		<span class="keyword">yield</span> <span class="number">2</span>;</div><div class="line">		<span class="keyword">yield</span> arg;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> genHandle = gen(<span class="number">3</span>);</div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> genHandle)&#123;</div><div class="line">	<span class="built_in">console</span>.log(i);   <span class="comment">// 依次打印：2，3</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> genHandle2 = gen(<span class="number">4</span>);</div><div class="line"><span class="built_in">console</span>.log(genHandle2.next()); <span class="comment">// &#123; value: 2, done: false &#125;</span></div><div class="line"><span class="built_in">console</span>.log(genHandle2.next()); <span class="comment">// &#123; value: 4, done: false &#125;</span></div><div class="line"><span class="built_in">console</span>.log(genHandle2.next()); <span class="comment">// &#123; value: undefined, done: true &#125;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><strong>代码解读：</strong>从上面代码可以看出生成器其实是一个<strong>变异的函数</strong>，和一般的函数<strong>没什么不同</strong>，只是多了一个 <strong>*</strong> 来区分这是一个生成器。当然生成器内部多了一个<strong>yeild语句</strong>，作用显而易见是<strong>为了停止继续执行下面的代码，相当于return的作用一样，但是不同的是它可以保存进度，可以通过代码控制继续执行。而且这里的yeild一定要在生成器的作用域范围内才会有效</strong>，这点要注意。在执行完生成器返回的对象genHandle和genHandle2可以看出，它们都是<strong>迭代器</strong>，也就是说生成器执行结果返回的是<a href="https://segmentfault.com/a/1190000010637886" target="_blank" rel="external">迭代器</a>对象，即<strong>生成器可以看成是一个迭代器的构造器，可以用来构建生成迭代器。yield在生成器构建迭代器的过成中的作用中就类似于切割代码的作用，把代码切割成一个可以迭代的集合</strong>。下面是上面的gen生成器转成ES5的代码，如下：</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen</span>(<span class="params">arg</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> regeneratorRuntime.wrap(<span class="function"><span class="keyword">function</span> <span class="title">gen$</span>(<span class="params">_context</span>) </span>&#123;</div><div class="line">				<span class="keyword">while</span> (<span class="number">1</span>) &#123;</div><div class="line">						<span class="keyword">switch</span> (_context.prev = _context.next) &#123;</div><div class="line">								<span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">										_context.next = <span class="number">2</span>;</div><div class="line">										<span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">								<span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">										_context.next = <span class="number">4</span>;</div><div class="line">										<span class="keyword">return</span> arg;</div><div class="line">								<span class="keyword">case</span> <span class="number">4</span>:</div><div class="line">								<span class="keyword">case</span> <span class="string">"end"</span>:</div><div class="line">										<span class="keyword">return</span> _context.stop();</div><div class="line">						&#125;</div><div class="line">				&#125;</div><div class="line">		&#125;, _marked[<span class="number">0</span>], <span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Example：</strong>为了便于理解，下面是我实现的一个简单的regeneratorRuntime.wrap函数来生成迭代器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> context = &#123;</div><div class="line">		next:<span class="number">0</span>,</div><div class="line">		prev:<span class="literal">null</span>,</div><div class="line">		gen$:<span class="literal">null</span>,</div><div class="line">		done:<span class="literal">false</span>,</div><div class="line">		stop:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="keyword">this</span>.done = <span class="literal">true</span>;</div><div class="line">		&#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">Object</span>.defineProperty(context, <span class="built_in">Symbol</span>.iterator, &#123;</div><div class="line">		enumerable: <span class="literal">false</span>,</div><div class="line">		writable: <span class="literal">false</span>,</div><div class="line">		configurable: <span class="literal">true</span>,</div><div class="line">		value: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">				<span class="keyword">var</span> me = <span class="keyword">this</span>;</div><div class="line">				<span class="keyword">return</span> &#123;</div><div class="line">						next: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">							 <span class="keyword">var</span> nextValue = me.gen$(me);</div><div class="line">								<span class="keyword">return</span> &#123;</div><div class="line">										value: nextValue,</div><div class="line">										done: me.done</div><div class="line">								&#125;</div><div class="line">						&#125;</div><div class="line">				&#125;</div><div class="line">		&#125;</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> regeneratorRuntime = &#123;</div><div class="line">	wrap:<span class="function"><span class="keyword">function</span>(<span class="params">_gen</span>)</span>&#123;</div><div class="line">		context.gen$ = _gen;</div><div class="line">		<span class="keyword">return</span> context;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen</span>(<span class="params">arg</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> regeneratorRuntime.wrap(<span class="function"><span class="keyword">function</span> <span class="title">gen$</span>(<span class="params">_context</span>) </span>&#123;</div><div class="line">				<span class="keyword">while</span> (<span class="number">1</span>) &#123;</div><div class="line">					<span class="keyword">switch</span> (_context.prev = _context.next) &#123;</div><div class="line">						<span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">							_context.next = <span class="number">2</span>;</div><div class="line">							<span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">						<span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">							_context.next = <span class="number">4</span>;</div><div class="line">							<span class="keyword">return</span> arg;</div><div class="line">						<span class="keyword">case</span> <span class="number">4</span>:</div><div class="line">						<span class="keyword">case</span> <span class="string">"end"</span>:</div><div class="line">							<span class="keyword">return</span> _context.stop();</div><div class="line">					&#125;</div><div class="line">			&#125;</div><div class="line">	&#125;);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> b = gen(<span class="number">3</span>);</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> c <span class="keyword">of</span> b)&#123;</div><div class="line">	<span class="built_in">console</span>.log(c);   <span class="comment">// 结果为：2，3</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##理解ES7的 asyn…await…<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 正常异步执行</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">		resolve(<span class="number">3</span>)</div><div class="line">	&#125;).then(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(value)</div><div class="line">	&#125;)</div><div class="line">	<span class="built_in">console</span>.log(<span class="number">4</span>)</div><div class="line">&#125;</div><div class="line">demo();         <span class="comment">// 执行结果依次是：4，3</span></div><div class="line"></div><div class="line"><span class="comment">// 生成器异步转同步</span></div><div class="line"><span class="keyword">let</span> gen = <span class="literal">null</span>;</div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">genDemo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">yield</span> setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line">		gen.next();</div><div class="line">	&#125;,<span class="number">100</span>)</div><div class="line">	<span class="built_in">console</span>.log(<span class="number">4</span>)</div><div class="line">&#125;</div><div class="line">gen = genDemo();</div><div class="line">gen.next()  <span class="comment">// // 执行结果依次是：3，4</span></div><div class="line"></div><div class="line"><span class="comment">// async...await...异步转同步</span></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncDemo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">		resolve(<span class="number">3</span>)</div><div class="line">	&#125;).then(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(value)</div><div class="line">	&#125;)</div><div class="line">	<span class="built_in">console</span>.log(<span class="number">4</span>)</div><div class="line">&#125;</div><div class="line">asyncDemo();    <span class="comment">// 执行结果依次是：3，4</span></div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>从上述的例子可以看出，<strong>生成器是可以解决异步如果转成同步代码的问题，而async…await…的实现原理其实也是基于生成器来实现的，不过这里要注意的是async…await…必须要配合Promise来实现，因为Promise的决议回调函数里面集成了类似于生成器gen.next()这样的代码来控制继续执行代码</strong>。</p>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/ES6迭代器（interator）和for-of循环/" id="art-left" class="art-right">
+                <span class="next-title">
+                    ES6迭代器（interator）和for...of循环<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/通过回调来理解Promise/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>通过回调来理解Promise
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>1970 ~ 2017</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

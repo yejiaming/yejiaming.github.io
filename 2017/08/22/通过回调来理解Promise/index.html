@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 通过回调来理解Promise · hexo </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="hexo">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="Promise, 回调, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "hexo",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">hexo</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/vue双向绑定/" style="font-size: 14px;">vue双向绑定</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">hexo</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                通过回调来理解Promise
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Promise/">Promise</a>
+                    
+                        <a href="/tags/回调/">回调</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <p>#通过回调来理解Promise<br>我们都知道Promise的出现是为了规避回调地狱的，由此，我们先来深入了解一下回调的缺陷：</p>
+<p>##回调</p>
+<blockquote>
+<p>1、缺乏信任</p>
+<p>2、不确定性</p>
+</blockquote>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> money = <span class="number">30</span>;</div><div class="line">order(money,<span class="function"><span class="keyword">function</span> <span class="title">getOrder</span>(<span class="params">orderId</span>)</span>&#123;  <span class="comment">// order是一个第三方的下订单的回调函数</span></div><div class="line">	 orderId &amp;&amp; pay(orderId);  <span class="comment">// 获取订单编号之后调用第三方支付pay方法去付款 </span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// ...同步代码</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><strong>代码解读：</strong>上面的代码只是常规代码中的一部分，其中order是一个第三方下订单的方法，需要携带回调函数过去获取订单编号，这里面就存在一些信任性和不确定性的问题，如：</p>
+<blockquote>
+<p>1、有可能回调函数getOrder始终不会被调用，那我们就永远拿不到订单编号去支付；<br>2、有可能回调了，可是回调了不止一次，导致我们重复去支付了；<br>3、不确定回掉时间，有可能立马回调，那么接下来的同步代码就会在回调之后执行，有可能它内部调用了异步代码再回调，那么接下来的同步代码就会在回调之前执行。<br>4、也有可能下订单的第三方模块自己内部出错了，导致我们没办法捕获异常；</p>
+</blockquote>
+<p>上面只是回调的一部分缺陷，但其实当我们不喜欢一个东西的时候总有这么多理由，当我们喜欢一个东西的时候，没有理由也会找一堆理由的，下面就是Promise的理由。</p>
+<p>##Promise</p>
+<blockquote>
+<p>1、可信任性</p>
+<p>2、确定性</p>
+</blockquote>
+<p>在解决上述的回调函数的问题之前，有必要先来认识一下Promise的一些主要方法：</p>
+<p>####1、Promise的起点new Promise()</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> <span class="title">PromiseBack</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">		resolve();</div><div class="line">		resolve();</div><div class="line">		reject();</div><div class="line">		reject();</div><div class="line">		<span class="built_in">console</span>.log(<span class="number">2</span>);</div><div class="line">&#125;).then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="number">4</span>);</div><div class="line">&#125;,()=&gt;&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="number">5</span>);</div><div class="line">&#125;)</div><div class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line"><span class="comment">// 执行结果依次是：1，2，3，4</span></div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>以上代码体现了new Promise的如下特性：</p>
+<blockquote>
+<p>1、一旦决议（调用过一次resolve或者reject）就不再重复调用决议回调或者改变决议回调。</p>
+<p>2、决议代码是同步的，可是决议的成功或失败的回调代码一定是异步的，而且Promise的异步实现比setTimeout的调用时间更早，因为回调决议存在于Event loop的microtask队列中。</p>
+</blockquote>
+<p>###2、多Promise同时执行：Promise.all([ .. ])</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> promise1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">		resolve(<span class="number">1</span>);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">		resolve(<span class="number">2</span>);</div><div class="line">		<span class="comment">// reject(3);</span></div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.all([promise1,promise2]).then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);    <span class="comment">// 打印结果是：[ 1, 2 ]</span></div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);    <span class="comment">// 当promise2注释部分放开，非注释部分注释，打印结果是：3</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>Promise.all方法对于promise数组的决议是：<strong>当其中所有的promise都是成功决议的时候，就会调用成功的决议回调resolveBack，并且把promise数组的决议值以数组的形式按照顺序返回resolve中的值；如果其中哪怕有一个失败的决议都会调用失败的决议回调rejectBack，并且只返回promise宿主中失败的决议值，以数组顺序返回</strong>。</p>
+<p>###3、多Promise竞赛执行：Promise.race([ .. ])<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> promise1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		resolve(<span class="number">1</span>);</div><div class="line">	&#125;,<span class="number">100</span>);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	 <span class="comment">//resolve(2);</span></div><div class="line">		reject(<span class="number">3</span>);</div><div class="line">	&#125;,<span class="number">50</span>);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.race([promise1,promise2]).then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);    <span class="comment">// 打印结果是：2</span></div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);    <span class="comment">// 当promise2注释部分放开，非注释部分注释，打印结果是：3</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>Promise.race方法和all方法不同，它对于promise数组的决议是：<strong>当promise数组中有一个成功了，那就会立即执行成功的决议回调，当有一个失败了，就会立即执行失败的决议回调，所以，它也叫*</strong>竞赛决议<em>，它的一个常用的应用场景就是<strong>异步请求超时处理</strong>，代码如下：<br>**</em>Example:<em>*</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// request(..)是一个支持Promise的Ajax工具</span></div><div class="line"><span class="keyword">let</span> promise1 = request( <span class="string">"http://some.url.1/"</span>);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="function"><span class="keyword">function</span>(<span class="params">second=<span class="number">1000</span></span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</div><div class="line">		setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">			reject(<span class="string">'请求超时'</span>);</div><div class="line">		&#125;,second)</div><div class="line">	&#125;)</div><div class="line">&#125;;</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.race([promise1,promise2(<span class="number">3000</span>)])</div><div class="line">.then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);</div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);    <span class="comment">// 当请求超时3秒钟就决议失败，打印错误信息，如果这里信息是统一处理，那最好超时的值构造成和异步请求返回错误结果的值一致</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>###4、Promise错误处理catch…<br><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(a);</div><div class="line">&#125;).catch(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(err);     <span class="comment">// 打印结果：33 [ReferenceError: a is not defined]</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>catch和then一样都是Promise的<strong>实例方法</strong>，而且也都调用完成之后也都会<strong>返回一个新的Promise实例</strong>，这样就可以继续then或catch了，这也就是<strong>Promise的“链式流”</strong>。其实catch本身实现和then是类似的，可以完全看成是then仅有失败决议回调，即：<strong>then(null,(err)=&gt;{})。也就是说then的失败决议当Promise决议代码出错了，哪怕没有调用reject方法，也是会被捕获到错误的</strong>。</p>
+<p>###总结<br>浏览过上述方法之后，我们现在来解决一开始我们遇到的那个回调函数的问题，解决问题代码如下：</p>
+<p><strong>Example</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> money = <span class="number">30</span>;</div><div class="line"><span class="keyword">let</span> promise1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">		order(money,<span class="function"><span class="keyword">function</span> <span class="title">getOrder</span>(<span class="params">orderId</span>)</span>&#123; </div><div class="line">				orderId ? resolve(orderId) : reject(orderId);</div><div class="line">		&#125;); </div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> promise2 = <span class="function"><span class="keyword">function</span>(<span class="params">second=<span class="number">1000</span></span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</div><div class="line">		setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">			reject(<span class="string">'请求超时'</span>);</div><div class="line">		&#125;,second)</div><div class="line">	&#125;)</div><div class="line">&#125;;</div><div class="line"><span class="keyword">let</span> promise3 = <span class="built_in">Promise</span>.race([promise1,promise2(<span class="number">3000</span>)])</div><div class="line">.then(<span class="function"><span class="keyword">function</span> <span class="title">resolveBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);</div><div class="line">&#125;,<span class="function"><span class="keyword">function</span> <span class="title">rejectBack</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(result);    <span class="comment">// 当请求超时，或者order内部代码错误等都会调用失败的决议</span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// ...同步代码</span></div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong>上面这个Promise例子展示了对回调问题的规避，具体解决思路是：</p>
+<blockquote>
+<p>1、通过使用Promise.race竞赛决议方法解决如果第三方的order方法不调用getOrder的情况，可以定位到具体的错误代码和错误原因；<br>2、根据Promise的决议特性：一旦决议不可状态不可更改，不可重复。解决了回调了不止一次的问题；<br>3、根据Promise的决议回调是异步的特性，决议的回调一定是异步的特性，解决了回调时间的不确定性。<br>4、根据rejectBack类似catch的特性，失败的决议回调是可以捕获到决议代码异常的报错的，那这样，如果第三方内部出现了问题，是可以捕获到的。</p>
+</blockquote>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/从ES6生成器-Generator-原理解读，到理解ES7的asyn-await/" id="art-left" class="art-right">
+                <span class="next-title">
+                    从ES6生成器(Generator)原理解读，到理解ES7的asyn...await<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/从ES6的Proxy代理看ES5的代理如何实现/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>从ES6的Proxy代理看ES5的代理如何实现
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>1970 ~ 2017</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>
