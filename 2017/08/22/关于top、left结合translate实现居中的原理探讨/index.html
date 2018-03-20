@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 关于top、left结合translate实现居中的原理探讨 · yjm </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="yjm">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="垂直居中, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "yjm",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">yjm</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/atom.xml">
+                    <span>订阅</span>
+                    
+                        <span class="menu-item-label">RSS</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/atom.xml">
+                        <span>订阅</span>
+                        
+                            <span class="menu-item-label">RSS</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">yjm</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                关于top、left结合translate实现居中的原理探讨
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/垂直居中/">垂直居中</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><ul>
+<li>在居中对齐的方法中常用的一种方法之一，就是使用绝对定位结合 translate、top、left实现居中，探讨原理之前先来看一下实现代码和实现效果：</li>
+</ul>
+<p></p><p data-height="300" data-theme-id="32624" data-slug-hash="paZEVz" data-default-tab="css,result" data-user="yejiaming" data-embed-version="2" data-pen-title="paZEVz" class="codepen">See the Pen <a href="https://codepen.io/yejiaming/pen/paZEVz/" target="_blank" rel="external">paZEVz</a> by yeArvin (<a href="https://codepen.io/yejiaming" target="_blank" rel="external">@yejiaming</a>) on <a href="https://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<ul>
+<li>上面的实现效果最主要的代码如下：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.out</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.in</span> &#123;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>解读：</em>由此可见主要是由top、left的百分比和translate百分比实现的，那我们接下来就有必要讲一下两者百分比的原理了：</p>
+<h3 id="top、left的百分比的原理"><a href="#top、left的百分比的原理" class="headerlink" title="top、left的百分比的原理"></a>top、left的百分比的原理</h3><ul>
+<li>从上述的代码和效果中可以看出，居中对齐的实现是依靠了<strong>top/left</strong>的的百分比来实现的，而且还是<strong>正</strong>的百分比，下面我们先给出其百分比和位置的公式：</li>
+</ul>
+<blockquote>
+<p>X（内X轴偏移量） = width（外） <em> left百分比（内）<br>  Y（内Y轴偏移量） = height（外） </em> top百分比（内）</p>
+</blockquote>
+<ul>
+<li>演示：</li>
+</ul>
+<p></p><p data-height="300" data-theme-id="32624" data-slug-hash="WMKxVK" data-default-tab="css,result" data-user="yejiaming" data-embed-version="2" data-pen-title="WMKxVK" class="codepen">See the Pen <a href="https://codepen.io/yejiaming/pen/WMKxVK/" target="_blank" rel="external">WMKxVK</a> by yeArvin (<a href="https://codepen.io/yejiaming" target="_blank" rel="external">@yejiaming</a>) on <a href="https://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<h3 id="translate的百分比的原理"><a href="#translate的百分比的原理" class="headerlink" title="translate的百分比的原理"></a>translate的百分比的原理</h3><ul>
+<li>从上述的代码和效果中可以看出，居中对齐的实现是还依靠了<strong>translate</strong>，而且还是负的百分比，下面我们先给出它百分比和位置的公式：</li>
+</ul>
+<blockquote>
+<p>X（内X轴偏移量） = width（内） <em> translateX百分比（内）<br>  Y（内Y轴偏移量） = height（内） </em> translateY百分比（内）</p>
+</blockquote>
+<ul>
+<li>演示</li>
+</ul>
+<p></p><p data-height="300" data-theme-id="32624" data-slug-hash="XZBKeO" data-default-tab="css,result" data-user="yejiaming" data-embed-version="2" data-pen-title="XZBKeO" class="codepen">See the Pen <a href="https://codepen.io/yejiaming/pen/XZBKeO/" target="_blank" rel="external">XZBKeO</a> by yeArvin (<a href="https://codepen.io/yejiaming" target="_blank" rel="external">@yejiaming</a>) on <a href="https://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>从上述的原理解读中可以看出最终的位置的计算公式是：</p>
+<blockquote>
+<p>X（内X轴偏移量） = width（外） <em> left百分比（内） + width（内） </em> translateX百分比（内）<br>  Y（内Y轴偏移量） = height（外） <em> top百分比（内） + height（内） </em> translateY百分比（内）</p>
+</blockquote>
+<p><strong>即：</strong></p>
+<blockquote>
+<p>X（内X轴偏移量） = 300 <em> 50% + 100 </em> -50% = 100<br>Y（内X轴偏移量） = 300 <em> 50% + 100 </em> -50% = 100</p>
+</blockquote>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/使用contenteditable+div模拟textarea文本域实现高度自适应/" id="art-left" class="art-right">
+                <span class="next-title">
+                    使用contenteditable+div模拟textarea文本域实现高度自适应<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/前端性能优化/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>前端性能优化
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2017 ~ 2018</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

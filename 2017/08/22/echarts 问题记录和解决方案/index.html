@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> echarts 问题记录和解决方案 · yjm </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="yjm">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="echarts, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "yjm",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">yjm</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/atom.xml">
+                    <span>订阅</span>
+                    
+                        <span class="menu-item-label">RSS</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/atom.xml">
+                        <span>订阅</span>
+                        
+                            <span class="menu-item-label">RSS</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">yjm</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                echarts 问题记录和解决方案
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/echarts/">echarts</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h2 id="如何设置-Y-轴两边同时存在刻度，并且允许不同"><a href="#如何设置-Y-轴两边同时存在刻度，并且允许不同" class="headerlink" title="如何设置 Y 轴两边同时存在刻度，并且允许不同"></a>如何设置 Y 轴两边同时存在刻度，并且允许不同</h2><ul>
+<li><p>效果如下：<br><img src="media/15210132803835/15210134115793.jpg" alt=""></p>
+</li>
+<li><p>解决方法：设置给<strong>yAxis</strong>设置成数组，并设置两个，然后在<strong>series</strong>中设置两个元素的<strong>yAxisIndex</strong>指向<strong>yAxis</strong>的目标下标即可。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">    yAxis: [</div><div class="line">        &#123;</div><div class="line">            type: <span class="string">'value'</span>,</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            type: <span class="string">'value'</span>,</div><div class="line">        &#125;</div><div class="line">    ],</div><div class="line">    series: [&#123;</div><div class="line">        yAxisIndex:<span class="number">0</span>,</div><div class="line">        data: [<span class="number">0.820</span>, <span class="number">0.932</span>, <span class="number">0.901</span>, <span class="number">0.934</span>, <span class="number">0.1290</span>, <span class="number">0.1330</span>, <span class="number">0.1320</span>],</div><div class="line">        type: <span class="string">'line'</span></div><div class="line">    &#125;,&#123;</div><div class="line">        yAxisIndex:<span class="number">1</span>,</div><div class="line">        data: [<span class="number">820</span>, <span class="number">932</span>, <span class="number">901</span>, <span class="number">934</span>, <span class="number">1290</span>, <span class="number">1330</span>, <span class="number">1320</span>],</div><div class="line">        type: <span class="string">'line'</span></div><div class="line">    &#125;]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="如何设置-Y-轴不存边框线，并且刻度值在刻度线上"><a href="#如何设置-Y-轴不存边框线，并且刻度值在刻度线上" class="headerlink" title="如何设置 Y 轴不存边框线，并且刻度值在刻度线上"></a>如何设置 Y 轴不存边框线，并且刻度值在刻度线上</h2><ul>
+<li><p>效果如下：<br><img src="media/15210132803835/15210139637827.jpg" alt=""></p>
+</li>
+<li><p>解决方法：配置<strong>yAxis</strong>中<strong>yAxis.axisLine.show</strong>属性和<strong>yAxis.axisTick</strong>属性就可以让 Y 轴不显示边框线了，控制刻度值是通过<strong>yAxis.axisLabel</strong>来控制的。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">    yAxis:&#123;</div><div class="line">        type: <span class="string">'value'</span>,</div><div class="line">        axisTick: <span class="literal">false</span>,    <span class="comment">// 控制 Y 轴边框向里突出的那个东西是否显示</span></div><div class="line">        scale: <span class="literal">true</span>,</div><div class="line">        axisLabel: &#123;</div><div class="line">          margin: <span class="number">0</span>,</div><div class="line">          show: <span class="literal">true</span>,</div><div class="line">          inside: <span class="literal">true</span>,</div><div class="line">          color: <span class="string">'#999999'</span>,</div><div class="line">          verticalAlign: <span class="string">'bottom'</span></div><div class="line">        &#125;,</div><div class="line">        axisLine: &#123;         <span class="comment">// 控制 Y 轴边框是否显示</span></div><div class="line">          show: <span class="literal">false</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="如何设置折线图上存在指示图标，并且指示图标样式可以自定义"><a href="#如何设置折线图上存在指示图标，并且指示图标样式可以自定义" class="headerlink" title="如何设置折线图上存在指示图标，并且指示图标样式可以自定义"></a>如何设置折线图上存在指示图标，并且指示图标样式可以自定义</h2><ul>
+<li><p>效果如下<br><img src="media/15210132803835/15210146965612.jpg" alt=""></p>
+</li>
+<li><p>解决方法：设置<strong>markPoint</strong>控制，<strong>markPoint.symbolSize</strong>可以设置指示图标的大小，<strong>markPoint.itemStyle.normal.formatter</strong>可以自定义设置图标内容，通过设置<strong>markPoint.data[i].xAxis</strong>控制图标X轴位置，通过设置<strong>markPoint.data[i].yAxis</strong>控制图标Y轴位置，设置<strong>markPoint.data[i].value</strong>当做<strong>formatter</strong>中param参数的value值，来自定义内容，<strong>itemStyle.normal.color</strong>可以设置指示图标的背景颜色，<strong>label</strong>可以设置目标指示图标的样式和偏移量等。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">  markPoint: &#123;</div><div class="line">    symbolSize: [<span class="number">30</span>, <span class="number">30</span>],</div><div class="line">    itemStyle: &#123;</div><div class="line">      normal: &#123;</div><div class="line">        label: &#123;</div><div class="line">          show: <span class="literal">true</span>,</div><div class="line">          formatter: <span class="function"><span class="keyword">function</span>(<span class="params">param</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (param.value == <span class="number">1</span>)</div><div class="line">              <span class="keyword">return</span> <span class="string">'S'</span>;</div><div class="line">            <span class="keyword">else</span></div><div class="line">              <span class="keyword">return</span> <span class="string">'B'</span>;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line">    data: [&#123;</div><div class="line">      xAxis: <span class="string">'2012-12-12'</span>,</div><div class="line">      yAxis: <span class="number">30</span>,</div><div class="line">      name: <span class="string">'波峰'</span>,</div><div class="line">      value: <span class="number">0</span>,</div><div class="line">      itemStyle: &#123;</div><div class="line">        normal: &#123;</div><div class="line">          color: <span class="string">'#FEB4B2'</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;, &#123;</div><div class="line">      xAxis: <span class="string">'2012-12-13'</span>,</div><div class="line">      yAxis: <span class="number">40</span>,</div><div class="line">      name: <span class="string">'波谷'</span>,</div><div class="line">      symbolRotate: <span class="number">180</span>,</div><div class="line">      value: <span class="number">1</span>,</div><div class="line">      itemStyle: &#123;</div><div class="line">        normal: &#123;</div><div class="line">          color: <span class="string">'#C1E476'</span></div><div class="line">        &#125;</div><div class="line">      &#125;,</div><div class="line">      label: &#123;</div><div class="line">        normal: &#123;</div><div class="line">          offset: [<span class="number">0</span>, <span class="number">5</span>]</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="如何精确设置折线图上圆点的数量，并且控制每个点的样式还不一样"><a href="#如何精确设置折线图上圆点的数量，并且控制每个点的样式还不一样" class="headerlink" title="如何精确设置折线图上圆点的数量，并且控制每个点的样式还不一样"></a>如何精确设置折线图上圆点的数量，并且控制每个点的样式还不一样</h2><ul>
+<li>效果如下：</li>
+</ul>
+<p><img src="media/15210132803835/15210155972648.jpg" alt=""></p>
+<ul>
+<li>解决方法：通过设置<strong>series</strong>中<strong>symbolSize</strong>可以控制小圆圈的大小，通过控制<strong>data</strong>中每一个<strong>value</strong>可以设置 Y 轴的位置，设置<strong>itemStyle</strong>可以控制图上每一个小圆点的样式，<strong>itemStyle.normal.opacity</strong>用来我们控制该圆点是否需要显示（这种方式是因为 X 轴置信只显示了两个坐标刻度，小圆点是根据刻度来的，所以只能显示所有刻度，然后有些隐藏而已），<strong>itemStyle.normal.opacity.borderColor</strong>就可以精确控制每一个小圆点不同样式了。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">  series: [&#123;</div><div class="line">    type: <span class="string">'line'</span>,</div><div class="line">    symbolSize: <span class="number">15</span>,</div><div class="line">    data: [&#123;</div><div class="line">      value: <span class="number">820</span>,</div><div class="line">      itemStyle: &#123;</div><div class="line">        normal: &#123;</div><div class="line">          opacity: <span class="number">1</span>, <span class="comment">// 控制是否显示折线上的该点小圆点</span></div><div class="line">          borderColor: <span class="string">'#6C9C39'</span> <span class="comment">// 控制显示某一个折线上该点小圆点的颜色</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;, &#123;</div><div class="line">      value: <span class="number">620</span>,</div><div class="line">      itemStyle: &#123;</div><div class="line">        normal: &#123;</div><div class="line">          opacity: <span class="number">0</span>, <span class="comment">// 控制是否显示折线上的该点小圆点</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;, &#123;</div><div class="line">      value: <span class="number">420</span>,</div><div class="line">      itemStyle: &#123;</div><div class="line">        normal: &#123;</div><div class="line">          opacity: <span class="number">1</span>, <span class="comment">// 控制是否显示折线上的该点小圆点</span></div><div class="line">          borderColor: <span class="string">'#6C9C39'</span> <span class="comment">// 控制显示某一个折线上该点小圆点的颜色</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;, ]</div><div class="line">  &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="如何精确控制-X-轴的显示刻度有多少个"><a href="#如何精确控制-X-轴的显示刻度有多少个" class="headerlink" title="如何精确控制 X 轴的显示刻度有多少个"></a>如何精确控制 X 轴的显示刻度有多少个</h2><ul>
+<li>效果如下：</li>
+</ul>
+<p><img src="media/15210132803835/15210164719568.jpg" alt=""></p>
+<ul>
+<li>解决方法：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">  xAxis: &#123;</div><div class="line">    type: <span class="string">'category'</span>,</div><div class="line">    show: <span class="literal">true</span>,</div><div class="line">    splitLine: <span class="literal">false</span>,   <span class="comment">// 不显示X 轴刻度线</span></div><div class="line">    axisLabel: &#123;</div><div class="line">      interval: <span class="number">0</span>, <span class="comment">// 强制控制显示所有的圆点（不会被自动控制）</span></div><div class="line">      padding: [<span class="number">0</span>, <span class="number">60</span>, <span class="number">0</span>, <span class="number">0</span>], <span class="comment">// 控制 X 轴padding值</span></div><div class="line">      color: <span class="string">'#999999'</span>,       <span class="comment">// X 轴刻度值颜色</span></div><div class="line">      formatter: <span class="function"><span class="keyword">function</span>(<span class="params">value, index</span>) </span>&#123; <span class="comment">// 精确控制是否显示刻度值</span></div><div class="line">        <span class="keyword">if</span> (index == <span class="number">0</span> || index == (klineDataLength - <span class="number">1</span>)) &#123;</div><div class="line">          value = value.slice(<span class="number">0</span>, <span class="number">4</span>) + <span class="string">'-'</span> + value.slice(<span class="number">4</span>, <span class="number">6</span>) + <span class="string">'-'</span> + value.slice(<span class="number">6</span>, <span class="number">8</span>);</div><div class="line">          <span class="keyword">if</span> (index === <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">'                                   '</span> + value;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">return</span> value;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="string">''</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line">    data: [<span class="string">'20121212'</span>, <span class="string">'20121213'</span>, <span class="string">'20121214'</span>, <span class="string">'20121215'</span>, <span class="string">'20121216'</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="如何给图表设置指示线"><a href="#如何给图表设置指示线" class="headerlink" title="如何给图表设置指示线"></a>如何给图表设置指示线</h2><ul>
+<li>效果如下：</li>
+</ul>
+<p><img src="media/15210132803835/15210168619095.jpg" alt=""></p>
+<ul>
+<li>解决方法：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">  series: [&#123;</div><div class="line">    type: <span class="string">'line'</span>,</div><div class="line">    markLine: &#123;</div><div class="line">      symbol: [<span class="string">'none'</span>, <span class="string">'none'</span>],</div><div class="line">      label: &#123;</div><div class="line">        normal: &#123;</div><div class="line">          position: <span class="string">'middle'</span>  <span class="comment">// 统一设置线上名称的位置</span></div><div class="line">        &#125;</div><div class="line">      &#125;,</div><div class="line">      data: [&#123;  <span class="comment">// 设置线的条数</span></div><div class="line">          yAxis: <span class="number">20</span>,</div><div class="line">          lineStyle: &#123;  <span class="comment">// 设置线的样式</span></div><div class="line">            normal: &#123;</div><div class="line">              type: <span class="string">'solid'</span>,</div><div class="line">              color: <span class="string">'#FF5B5C'</span></div><div class="line">            &#125;</div><div class="line">          &#125;,</div><div class="line">          label: &#123;      <span class="comment">// 设置线上名称和其样式</span></div><div class="line">            show: <span class="literal">true</span>,</div><div class="line">            normal: &#123;</div><div class="line">              formatter: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'过热'</span></div><div class="line">              &#125;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;, &#123;</div><div class="line">          yAxis: <span class="number">30</span>,</div><div class="line">          lineStyle: &#123;</div><div class="line">            normal: &#123;</div><div class="line">              type: <span class="string">'solid'</span>,</div><div class="line">              color: <span class="string">'#6BACFC'</span></div><div class="line">            &#125;</div><div class="line">          &#125;,</div><div class="line">          label: &#123;</div><div class="line">            show: <span class="literal">true</span>,</div><div class="line">            normal: &#123;</div><div class="line">              formatter: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'过冷'</span></div><div class="line">              &#125;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="如何设置图表内容全部展示的同时自适应布局"><a href="#如何设置图表内容全部展示的同时自适应布局" class="headerlink" title="如何设置图表内容全部展示的同时自适应布局"></a>如何设置图表内容全部展示的同时自适应布局</h2><ul>
+<li>解决方法：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">option = &#123;</div><div class="line">  grid: &#123;</div><div class="line">    top: <span class="number">20</span>,</div><div class="line">    bottom: <span class="number">10</span>,</div><div class="line">    left: <span class="number">0</span>,</div><div class="line">    right: <span class="number">5</span>,</div><div class="line">    containLabel: <span class="literal">true</span>, <span class="comment">// 当设置为true时会把所有的内容的包含进去再自适应布局布局</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/CSSOM视图模式(CSSOM View Module)/" id="art-left" class="art-right">
+                <span class="next-title">
+                    CSSOM视图模式(CSSOM View Module)<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/理解CSS中的层叠上下文和层叠顺序/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>理解CSS中的层叠上下文和层叠顺序
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2017 ~ 2018</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

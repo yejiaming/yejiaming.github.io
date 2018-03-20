@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 一段代码看出JS的的解析到执行的顺序规则 · yjm </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="yjm">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="JS执行顺序, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "yjm",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">yjm</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/atom.xml">
+                    <span>订阅</span>
+                    
+                        <span class="menu-item-label">RSS</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/atom.xml">
+                        <span>订阅</span>
+                        
+                            <span class="menu-item-label">RSS</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">yjm</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                一段代码看出JS的的解析到执行的顺序规则
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/JS执行顺序/">JS执行顺序</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">a, b</span>) </span>&#123;</div><div class="line">    b = <span class="number">3</span>;</div><div class="line">    <span class="keyword">var</span> b;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 打印出：10</span></div><div class="line">    <span class="built_in">console</span>.log(b); <span class="comment">// 打印出：3</span></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bar(<span class="number">10</span>);</div></pre></td></tr></table></figure>
+<p>##执行顺序</p>
+<h3 id="函数外面的时候，代码拆成前后两部分来看："><a href="#函数外面的时候，代码拆成前后两部分来看：" class="headerlink" title="函数外面的时候，代码拆成前后两部分来看："></a>函数外面的时候，代码拆成前后两部分来看：</h3><h4 id="第-1-部分：（申明）"><a href="#第-1-部分：（申明）" class="headerlink" title="第 1 部分：（申明）"></a>第 1 部分：（申明）</h4><ul>
+<li>1、申明了一个<code>bar=undefined</code>的函数变量，用代码可以看成：（<code>VO</code>是执行上下文，可以看成是<code>this</code><br>）</li>
+</ul>
+<blockquote>
+<p>VO = {bar:undefined}</p>
+</blockquote>
+<h4 id="第-2-部分：（执行）"><a href="#第-2-部分：（执行）" class="headerlink" title="第 2 部分：（执行）"></a>第 2 部分：（执行）</h4><ul>
+<li>2、执行<code>bar(10)</code>这里由于是函数，存在独立作用域，只要存在作用域就先解析，所以这里又可以拆成两部分来看：</li>
+</ul>
+<h5 id="第-2-1-部分：（申明）"><a href="#第-2-1-部分：（申明）" class="headerlink" title="第 2.1 部分：（申明）"></a>第 2.1 部分：（申明）</h5><ul>
+<li>先声明<code>a=10</code>,<code>b=undefined</code>两个形参变量，再申明函数变量<code>b=function b(){}</code>，由于上下文<code>VO1</code>中已经存在 <code>b</code> 了，所以会覆盖掉形参<code>b</code>的申明，然后再申明<code>var</code>变量<code>b=undefined</code>，并覆盖已经存在<code>VO1</code>中函数变量<code>b</code>，用代码表示：</li>
+</ul>
+<blockquote>
+<p>VO1 = {a：10,b:undefined}</p>
+</blockquote>
+<p><strong>注意：</strong>这里需要注意的是<strong>函数表达式</strong><code>return function a(){}</code>并不会提前申明，<code>函数表达式</code>和<code>函数申明</code>的异同是，除了标准的<code>函数申明</code>：<code>function a(){}</code>，其他的都是<code>函数表达式</code>，如：<code>var a = function (){}</code>、<code>(function a(){})</code>…等。<br><strong>注意：</strong>申明的权重：<strong>argument(函数的形参申明) &gt; function声明 &gt; var声明 (也就之前提高的变量提升Hoisting)</strong></p>
+<h5 id="第-2-2-部分：（执行）"><a href="#第-2-2-部分：（执行）" class="headerlink" title="第 2.2 部分：（执行）"></a>第 2.2 部分：（执行）</h5><ul>
+<li>先执行<code>b=3</code>，再执行两个console.log，再执行：函数表达式申明，及执行。</li>
+</ul>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/JS创建对象的最好用的两种方式/" id="art-left" class="art-right">
+                <span class="next-title">
+                    JS创建对象的最好用的两种方式<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/JS模块规范：AMD、UMD、CMD、commonJS、ES6 module/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>JS模块规范：AMD、UMD、CMD、commonJS、ES6 module
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2017 ~ 2018</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>

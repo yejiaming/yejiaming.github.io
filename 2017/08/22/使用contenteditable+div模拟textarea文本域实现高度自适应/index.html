@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 使用contenteditable+div模拟textarea文本域实现高度自适应 · yjm </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="yjm">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="contenteditable, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "yjm",
+        author: "arvin ye",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">yjm</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/atom.xml">
+                    <span>订阅</span>
+                    
+                        <span class="menu-item-label">RSS</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/AMD-UMD-CMD-commonJS-ES6-module/" style="font-size: 14px;">AMD - UMD - CMD - commonJS - ES6 module</a> <a href="/tags/CSSOM视图模式/" style="font-size: 14px;">CSSOM视图模式</a> <a href="/tags/ES6解构赋值/" style="font-size: 14px;">ES6解构赋值</a> <a href="/tags/Generator/" style="font-size: 14px;">Generator</a> <a href="/tags/JS执行顺序/" style="font-size: 14px;">JS执行顺序</a> <a href="/tags/Promise/" style="font-size: 14px;">Promise</a> <a href="/tags/apply/" style="font-size: 14px;">apply</a> <a href="/tags/asyn-await/" style="font-size: 14px;">asyn...await</a> <a href="/tags/bind/" style="font-size: 14px;">bind</a> <a href="/tags/call/" style="font-size: 14px;">call</a> <a href="/tags/contenteditable/" style="font-size: 14px;">contenteditable</a> <a href="/tags/echarts/" style="font-size: 14px;">echarts</a> <a href="/tags/interator/" style="font-size: 14px;">interator</a> <a href="/tags/scroll/" style="font-size: 14px;">scroll</a> <a href="/tags/sticky/" style="font-size: 14px;">sticky</a> <a href="/tags/vuex/" style="font-size: 14px;">vuex</a> <a href="/tags/webkit/" style="font-size: 14px;">webkit</a> <a href="/tags/代理/" style="font-size: 14px;">代理</a> <a href="/tags/创建对象/" style="font-size: 14px;">创建对象</a> <a href="/tags/原型链/" style="font-size: 14px;">原型链</a> <a href="/tags/变量声名/" style="font-size: 14px;">变量声名</a> <a href="/tags/回调/" style="font-size: 14px;">回调</a> <a href="/tags/块级作用域/" style="font-size: 14px;">块级作用域</a> <a href="/tags/垂直居中/" style="font-size: 14px;">垂直居中</a> <a href="/tags/层叠水平/" style="font-size: 14px;">层叠水平</a> <a href="/tags/性能/" style="font-size: 14px;">性能</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/数组遍历/" style="font-size: 14px;">数组遍历</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/线程/" style="font-size: 14px;">线程</a> <a href="/tags/继承-原型链/" style="font-size: 14px;">继承 - 原型链</a> <a href="/tags/轮播/" style="font-size: 14px;">轮播</a> <a href="/tags/闭包/" style="font-size: 14px;">闭包</a> <a href="/tags/隐式转换/" style="font-size: 14px;">隐式转换</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/atom.xml">
+                        <span>订阅</span>
+                        
+                            <span class="menu-item-label">RSS</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">yjm</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月22日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                使用contenteditable+div模拟textarea文本域实现高度自适应
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/contenteditable/">contenteditable</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <p>开发过程中由于需要在发送消息的时候需要有一个可以高度自适应的文本域，一开始是使用textarea并搭配auto-size插件来做到textarea的高度自适应，后来因为遇到一些问题，而且也多加了依赖缺乏可定制，所以决定使用contenteditable来实现。</p>
+<h2 id="contenteditable介绍"><a href="#contenteditable介绍" class="headerlink" title="contenteditable介绍"></a>contenteditable介绍</h2><p><strong>contenteditable</strong>属性规定元素内容是否可编辑，是H5新增的属性，支持情况相当好，基本上所有的浏览器都兼容。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">element</span> <span class="attr">contenteditable</span>=<span class="string">"true|false"</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="实现主要代码如下"><a href="#实现主要代码如下" class="headerlink" title="实现主要代码如下"></a>实现主要代码如下</h2><p>代码实现是基于vue来实现的。<br><strong>html部分：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"textarea"</span> <span class="attr">contenteditable</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>CSS部分</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;style scoped lang="less" rel="stylesheet/less"&gt;</div><div class="line">    <span class="selector-class">.textarea</span> &#123;</div><div class="line">        <span class="attribute">box-sizing</span>: border-box;</div><div class="line">        <span class="attribute">min-height</span>: <span class="number">136px</span>;</div><div class="line">        <span class="attribute">max-height</span>: <span class="number">300px</span>;</div><div class="line">        <span class="attribute">margin-left</span>: auto;</div><div class="line">        <span class="attribute">margin-right</span>: auto;</div><div class="line">        <span class="attribute">padding</span>: <span class="number">3px</span>;</div><div class="line">        <span class="attribute">outline</span>: <span class="number">0</span>;</div><div class="line">        <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#a0b3d6</span>;</div><div class="line">        <span class="attribute">font-size</span>: <span class="number">12px</span>;</div><div class="line">        <span class="attribute">word-wrap</span>: break-word;</div><div class="line">        <span class="attribute">overflow-x</span>: hidden;</div><div class="line">        <span class="attribute">overflow-y</span>: auto;</div><div class="line">        <span class="attribute">_overflow-y</span>: visible;</div><div class="line">        -webkit-user-modify: read-write-plaintext-only; // 只是编辑text文本，只能解决webkit内核里面问题，手机端适用</div><div class="line">        -webkit-user-select: text; // 解决IOS部分手机不支持contenteditable=true属性问题</div><div class="line">        <span class="selector-tag">p</span> &#123;</div><div class="line">            <span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong></p>
+<ul>
+<li>设置-webkit-user-modify属性，是为了在剪切复制的时候会把剪切的内容的格式也一并带过来，由于我们是仿写textarea，是不支持富文本的，所以需要需要将内容格式化成文本格式，而该属性在webkit内核下就可以达到我们的目的。</li>
+<li>设置-webkit-user-select属性，是为了解决在测试过程中出现部分IOS手机不支持contenteditable属性的问题。</li>
+</ul>
+<p><strong>JS部分：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</div><div class="line">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">        mounted() &#123;</div><div class="line">            <span class="keyword">this</span>.addInputEvent();</div><div class="line">            <span class="keyword">this</span>.addFocusEvent();</div><div class="line">            <span class="keyword">this</span>.addEventPaste(<span class="keyword">this</span>.$el);</div><div class="line">        &#125;,</div><div class="line">        methods: &#123;</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 监听鼠标input事件</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            addInputEvent()&#123;</div><div class="line">                <span class="keyword">this</span>.$el.addEventListener(<span class="string">'input'</span>, () =&gt; &#123;</div><div class="line">                    <span class="keyword">this</span>.$emit(<span class="string">'input'</span>, <span class="keyword">this</span>.getValue());</div><div class="line">                &#125;)</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 监听鼠标获取焦点事件</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            addFocusEvent()&#123;</div><div class="line">                <span class="keyword">this</span>.$el.addEventListener(<span class="string">'focus'</span>, () =&gt; &#123;</div><div class="line">                    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">                        <span class="comment">// 解决：如果ios手机使用的不是原生键盘（也可能不止IOS手机有这个问题），则会出现键盘挡住输入框问题，当bottom=0的情况，使用这个属性就可以滚动屏幕中央</span></div><div class="line">                        <span class="keyword">this</span>.$el.scrollIntoView(<span class="literal">true</span>);</div><div class="line">                    &#125;, <span class="number">300</span>);</div><div class="line">                    <span class="keyword">this</span>.$emit(<span class="string">'focus'</span>);</div><div class="line">                &#125;)</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 追加</span></div><div class="line"><span class="comment">             * @param value</span></div><div class="line"><span class="comment">             * @param bool</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            appendValue(value, bool) &#123;</div><div class="line">                <span class="keyword">this</span>.$el.innerText += value;</div><div class="line">                <span class="keyword">this</span>.$emit(<span class="string">'input'</span>, <span class="keyword">this</span>.getValue());</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 监听复制事件，去除样式得到纯文本</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            addEventPaste: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">                <span class="comment">// 干掉IE http之类地址自动加链接</span></div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="built_in">document</span>.execCommand(<span class="string">"AutoUrlDetect"</span>, <span class="literal">false</span>, <span class="literal">false</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">// 监听复制paste事件，目的是为了让-webkit-user-modify属性兼容IE8，毕竟该属性在IE兼容性不好</span></div><div class="line">                el.addEventListener(<span class="string">'paste'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">                    e.preventDefault();</div><div class="line">                    <span class="keyword">var</span> text = <span class="literal">null</span>;</div><div class="line">                    <span class="keyword">if</span> (<span class="built_in">window</span>.clipboardData &amp;&amp; clipboardData.setData) &#123;</div><div class="line">                        <span class="comment">// IE</span></div><div class="line">                        text = <span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        text = (e.originalEvent || e).clipboardData.getData(<span class="string">'text/plain'</span>) || prompt(<span class="string">'在这里输入文本'</span>);</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">// 这里的目的是为了将鼠标的光标移动到复制之后文本的末尾的末尾</span></div><div class="line">                    <span class="keyword">if</span> (<span class="built_in">document</span>.body.createTextRange) &#123;</div><div class="line">                        <span class="keyword">if</span> (<span class="built_in">document</span>.selection) &#123;</div><div class="line">                            textRange = <span class="built_in">document</span>.selection.createRange();</div><div class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.getSelection) &#123;</div><div class="line">                            sel = <span class="built_in">window</span>.getSelection();</div><div class="line">                            <span class="keyword">var</span> range = sel.getRangeAt(<span class="number">0</span>);</div><div class="line">                            <span class="comment">// 创建临时元素，使得TextRange可以移动到正确的位置</span></div><div class="line">                            <span class="keyword">var</span> tempEl = <span class="built_in">document</span>.createElement(<span class="string">"span"</span>);</div><div class="line">                            tempEl.innerHTML = <span class="string">"&amp;#FEFF;"</span>;</div><div class="line">                            range.deleteContents();</div><div class="line">                            range.insertNode(tempEl);</div><div class="line">                            textRange = <span class="built_in">document</span>.body.createTextRange();</div><div class="line">                            textRange.moveToElementText(tempEl);</div><div class="line">                            tempEl.parentNode.removeChild(tempEl);</div><div class="line">                        &#125;</div><div class="line">                        textRange.text = text;</div><div class="line">                        textRange.collapse(<span class="literal">false</span>);</div><div class="line">                        textRange.select();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="comment">// Chrome之类浏览器</span></div><div class="line">                        <span class="built_in">document</span>.execCommand(<span class="string">"insertText"</span>, <span class="literal">false</span>, text);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 替换</span></div><div class="line"><span class="comment">             * @param value</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            setValue(value) &#123;</div><div class="line">                <span class="keyword">this</span>.$el.innerText = value;</div><div class="line">                <span class="keyword">this</span>.$emit(<span class="string">'input'</span>, <span class="keyword">this</span>.getValue());</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 获取值</span></div><div class="line"><span class="comment">             * @returns &#123;*&#125;</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            getValue() &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.getHtmlToText();</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 获取HTML转换之后的文本（去除div标签，替换&lt;br/&gt;为换行）</span></div><div class="line"><span class="comment">             * @returns &#123;string&#125;</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            getHtmlToText() &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.replaceToBreak(<span class="keyword">this</span>.getHtml());</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 获取HTML</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            getHtml() &#123;</div><div class="line">                <span class="keyword">return</span> <span class="built_in">document</span>.querySelector(<span class="string">'.textarea'</span>).innerHTML</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 替换DIV到换行符</span></div><div class="line"><span class="comment">             * @returns &#123;string&#125;</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            replaceToBreak(html) &#123;</div><div class="line">                html = <span class="built_in">String</span>(html).replace(<span class="regexp">/&lt;\/div&gt;/gi</span>, <span class="string">''</span>);</div><div class="line">                html = html.replace(<span class="regexp">/&lt;div&gt;(&lt;br&gt;)?(&lt;br\/&gt;)?/gi</span>, <span class="string">'\n'</span>);</div><div class="line">                html = html.replace(<span class="regexp">/&lt;br&gt;|&lt;br\/&gt;/gi</span>, <span class="string">'\n'</span>);</div><div class="line">                <span class="keyword">return</span> html;</div><div class="line">            &#125;,</div><div class="line">            <span class="comment">/**</span></div><div class="line"><span class="comment">             * 获取纯text文本</span></div><div class="line"><span class="comment">             * @returns &#123;string&#125;</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            getText()&#123;</div><div class="line">                <span class="keyword">if</span> (<span class="built_in">window</span>.navigator.appName.indexOf(<span class="string">"Explorer"</span>) &gt; <span class="number">-1</span>)</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>.$el.innerText;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>.$el.textContent;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">    &#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>代码解读：</strong></p>
+<ul>
+<li>其中<strong>addEventPaste</strong>方法是为了解决非webkit内核对于<strong>-webkit-user-select</strong>属性支持不好的问题。里面主要是监听黏贴事件然后或者剪切板的文本内容然后再阻止黏贴事件，并将文本内容追加到光标中，并将光标移动到相应的位置。</li>
+<li>其中<strong>replaceToBreak</strong>方法是为了解决在textarea中换行的问题，在该伪textarea中换行是会单独将换行内容放到新的DIV中的，所以，当我们需要对该内容进行格式化处理才行。</li>
+<li><strong>this.$el.scrollIntoView</strong>的作用是为了当使用者将我们的输入框是使用绝对定位放在页面底部的时候而被虚拟键盘遮挡的问题。</li>
+</ul>
+<h2 id="issue"><a href="#issue" class="headerlink" title="issue"></a>issue</h2><ul>
+<li>使用该组件注意一个问题就是不要在可视化区域的节点上使用-<strong>webkit-user-select: none</strong>样式，否则会出现当鼠标焦点小时光标和小水滴无法消失的情况</li>
+</ul>
+<h2 id="github地址"><a href="#github地址" class="headerlink" title="github地址"></a>github地址</h2><p><a href="https://github.com/yejiaming/textarea/tree/master" target="_blank" rel="external">github项目地址</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://www.zhangxinxu.com/wordpress/2010/12/div-textarea-height-auto/" target="_blank" rel="external">div模拟textarea文本域轻松实现高度自适应</a><br><a href="http://www.zhangxinxu.com/wordpress/2016/01/contenteditable-plaintext-only/" target="_blank" rel="external">如何让contenteditable元素只能输入纯文本</a></p>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/08/22/JS解决sticky的兼容性问题/" id="art-left" class="art-right">
+                <span class="next-title">
+                    名词汇总JS解决sticky的兼容性问题<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/08/22/关于top、left结合translate实现居中的原理探讨/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>关于top、left结合translate实现居中的原理探讨
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/yejiaming" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2017 ~ 2018</span>
+        <span>❤</span>
+        <span>arvin ye</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>
